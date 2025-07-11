@@ -8,24 +8,15 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
 import { AddProductModal } from "../../components/AddProductModal";
 
-// Edit Profile Modal Component
+// Simplified Edit Profile Modal Component
 const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
   const [formData, setFormData] = useState({
     username: user?.username || '',
     email: user?.email || '',
     brandName: user?.brandName || '',
-    brandDescription: user?.brandDescription || '',
-    location: 'Chicago, IL',
-    website: '',
     bio: isBrand 
       ? user?.brandDescription || "Rockage: Where fashion meets fearless attitude! Celebrate individuality with our premium 100% cotton, 250gsm oversized anime tees. Bold designs like \"HONOR BOUND\" and \"GENJUTSU\" in sizes S-XXL. Wear your attitude. Rock your age!"
-      : "Fashion enthusiast and style curator. Love discovering new brands and unique designs.",
-    socialLinks: {
-      instagram: '',
-      twitter: '',
-      linkedin: '',
-      website: ''
-    }
+      : "Fashion enthusiast and style curator. Love discovering new brands and unique designs."
   });
 
   const [profileImage, setProfileImage] = useState(null);
@@ -35,18 +26,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith('social_')) {
-      const socialPlatform = name.replace('social_', '');
-      setFormData(prev => ({
-        ...prev,
-        socialLinks: {
-          ...prev.socialLinks,
-          [socialPlatform]: value
-        }
-      }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
@@ -77,7 +57,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
       
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-2xl" style={{ borderRadius: '1px' }}>
+        <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-2xl" style={{ borderRadius: '1px' }}>
           <CardContent className="p-0">
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between" style={{ borderRadius: '1px 1px 0 0' }}>
@@ -96,7 +76,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
             </div>
 
             {/* Content */}
-            <div className="p-6 space-y-8">
+            <div className="p-6 space-y-6">
               {/* Profile Image Section */}
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
@@ -121,7 +101,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
               </div>
 
               {/* Form Fields */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
                 {/* Username */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -156,7 +136,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
                 {/* Brand Name (if brand) */}
                 {isBrand && (
-                  <div className="md:col-span-2">
+                  <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Brand Name
                     </label>
@@ -172,131 +152,22 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                   </div>
                 )}
 
-                {/* Location */}
+                {/* Bio - All details in one field */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Location
+                    {isBrand ? 'Brand Bio (Include all details here)' : 'Bio (Include all details here)'}
                   </label>
-                  <input
-                    type="text"
-                    name="location"
-                    value={formData.location}
+                  <textarea
+                    name="bio"
+                    value={formData.bio}
                     onChange={handleInputChange}
-                    className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    rows={8}
+                    className="w-full px-4 py-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
                     style={{ borderRadius: '1px' }}
-                    placeholder="Enter location"
+                    placeholder={isBrand ? "Include brand description, location, website, social links, and all other details here..." : "Include your bio, interests, location, social links, and all other details here..."}
                   />
-                </div>
-
-                {/* Website */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Website
-                  </label>
-                  <input
-                    type="url"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleInputChange}
-                    className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    style={{ borderRadius: '1px' }}
-                    placeholder="https://yourwebsite.com"
-                  />
-                </div>
-              </div>
-
-              {/* Bio/Description */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  {isBrand ? 'Brand Description' : 'Bio'}
-                </label>
-                <textarea
-                  name="bio"
-                  value={formData.bio}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
-                  style={{ borderRadius: '1px' }}
-                  placeholder={isBrand ? "Describe your brand..." : "Tell us about yourself..."}
-                />
-                <p className="text-xs text-gray-500 mt-1">{formData.bio.length}/500 characters</p>
-              </div>
-
-              {/* Social Links */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-4">
-                  Social Links
-                </label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-5 h-5 bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center" style={{ borderRadius: '1px' }}>
-                        <span className="text-white text-xs font-bold">IG</span>
-                      </div>
-                      <span className="text-sm text-gray-700">Instagram</span>
-                    </div>
-                    <input
-                      type="text"
-                      name="social_instagram"
-                      value={formData.socialLinks.instagram}
-                      onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                      style={{ borderRadius: '1px' }}
-                      placeholder="@username"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-5 h-5 bg-blue-500 flex items-center justify-center" style={{ borderRadius: '1px' }}>
-                        <span className="text-white text-xs font-bold">T</span>
-                      </div>
-                      <span className="text-sm text-gray-700">Twitter</span>
-                    </div>
-                    <input
-                      type="text"
-                      name="social_twitter"
-                      value={formData.socialLinks.twitter}
-                      onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                      style={{ borderRadius: '1px' }}
-                      placeholder="@username"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-5 h-5 bg-blue-700 flex items-center justify-center" style={{ borderRadius: '1px' }}>
-                        <span className="text-white text-xs font-bold">in</span>
-                      </div>
-                      <span className="text-sm text-gray-700">LinkedIn</span>
-                    </div>
-                    <input
-                      type="text"
-                      name="social_linkedin"
-                      value={formData.socialLinks.linkedin}
-                      onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                      style={{ borderRadius: '1px' }}
-                      placeholder="linkedin.com/in/username"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Globe className="w-5 h-5 text-gray-600" />
-                      <span className="text-sm text-gray-700">Website</span>
-                    </div>
-                    <input
-                      type="url"
-                      name="social_website"
-                      value={formData.socialLinks.website}
-                      onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
-                      style={{ borderRadius: '1px' }}
-                      placeholder="https://yoursite.com"
-                    />
-                  </div>
+                  <p className="text-xs text-gray-500 mt-1">{formData.bio.length}/1000 characters</p>
+                  <p className="text-xs text-blue-600 mt-1">💡 Add all your details in the bio - location, website, social media, contact info, etc.</p>
                 </div>
               </div>
             </div>
@@ -344,13 +215,8 @@ export const ProfilePage = (): JSX.Element => {
   const { cartItems } = useCart();
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState("Products"); // Always start with Products for brands, Orders for users
+  const [activeTab, setActiveTab] = useState("Products");
   const [profileData, setProfileData] = useState(user);
-
-  // Debug logging
-  console.log("ProfilePage - User:", user);
-  console.log("ProfilePage - isBrand:", isBrand);
-  console.log("ProfilePage - user.isBrand:", user?.isBrand);
 
   // Set correct initial tab based on user type
   React.useEffect(() => {
@@ -373,11 +239,10 @@ export const ProfilePage = (): JSX.Element => {
 
   const handleSaveProfile = (updatedData) => {
     setProfileData({ ...profileData, ...updatedData });
-    // Here you would typically make an API call to save the data
     console.log('Profile updated:', updatedData);
   };
 
-  // Mock orders data - in real app, this would come from API
+  // Mock orders data
   const userOrders = [
     {
       id: "ORD001",
@@ -426,13 +291,10 @@ export const ProfilePage = (): JSX.Element => {
     }
   ];
 
-  // Force correct tabs based on user type
   const isActuallyBrand = user?.isBrand || isBrand;
   const tabs = isActuallyBrand 
     ? ["Products", "Analytics", "Settings"]
     : ["Orders", "Wishlist", "Settings"];
-
-  console.log("User isBrand:", isActuallyBrand, "Tabs:", tabs, "Active tab:", activeTab);
 
   const getTabContent = () => {
     switch (activeTab) {
@@ -450,7 +312,6 @@ export const ProfilePage = (): JSX.Element => {
                 Add Product
               </Button>
             </div>
-            {/* Mobile: 2 columns, Tablet: 2 columns, Desktop: 3 columns */}
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
               {brandProducts.map((product) => (
                 <Card key={product.id} className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 bg-white" style={{ borderRadius: '1px' }}>
@@ -523,15 +384,6 @@ export const ProfilePage = (): JSX.Element => {
                   </CardContent>
                 </Card>
               ))}
-              {userOrders.length === 0 && (
-                <div className="text-center py-12 sm:py-16">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 flex items-center justify-center mx-auto mb-4 sm:mb-6" style={{ borderRadius: '1px' }}>
-                    <Package className="w-8 h-8 sm:w-10 sm:h-10 text-gray-500" />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No orders yet</h3>
-                  <p className="text-gray-600 text-sm sm:text-base">Start shopping to see your orders here!</p>
-                </div>
-              )}
             </div>
           </div>
         );
@@ -601,20 +453,6 @@ export const ProfilePage = (): JSX.Element => {
                   </div>
                 </CardContent>
               </Card>
-              <Card className="border border-gray-200 bg-white hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
-                <CardContent className="p-4 sm:p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Privacy Settings</h4>
-                      <p className="text-xs sm:text-sm text-gray-600">Manage your privacy preferences</p>
-                    </div>
-                    <Button variant="outline" className="border-gray-300 hover:bg-gray-50 text-sm w-full sm:w-auto" style={{ borderRadius: '1px' }}>
-                      <Settings className="h-4 w-4 mr-2" />
-                      Manage
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           </div>
         );
@@ -626,7 +464,7 @@ export const ProfilePage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header - Mobile Optimized */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-white backdrop-blur-xl border-b border-gray-200 px-3 sm:px-4 py-3">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <Button
@@ -655,9 +493,9 @@ export const ProfilePage = (): JSX.Element => {
         </div>
       </header>
 
-      {/* Main Content - Mobile Optimized with Increased Width */}
+      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
-        {/* Profile Header Card - Mobile Responsive with Increased Width */}
+        {/* Profile Header Card - Simplified */}
         <Card className="border border-gray-200 overflow-hidden mb-6 sm:mb-8 bg-white shadow-lg" style={{ borderRadius: '1px' }}>
           <CardContent className="p-4 sm:p-6 lg:p-8">
             <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-4 sm:gap-6 lg:gap-8">
@@ -667,7 +505,6 @@ export const ProfilePage = (): JSX.Element => {
                   {isBrand ? profileData?.brandName?.charAt(0) || 'R' : profileData?.username?.charAt(0)?.toUpperCase()}
                 </div>
                 
-                {/* Verified Brand Badge */}
                 <Badge className="bg-blue-600 text-white hover:bg-blue-600 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium shadow-lg rounded-md">
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white mr-1 sm:mr-2 rounded-sm"></div>
                   Verified Brand
@@ -684,17 +521,7 @@ export const ProfilePage = (): JSX.Element => {
                     <p className="text-gray-600 text-base sm:text-lg">@{profileData?.username}</p>
                   </div>
                   
-                  {/* Action Buttons - Mobile Stacked */}
                   <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto">
-                    {isActuallyBrand && (
-                      <Button
-                        variant="outline"
-                        className="border-gray-300 hover:bg-gray-50 px-4 sm:px-6 text-xs sm:text-sm"
-                        style={{ borderRadius: '1px' }}
-                      >
-                        VIEW PUBLIC PROFILE
-                      </Button>
-                    )}
                     <Button
                       onClick={() => setShowEditProfile(true)}
                       variant="outline"
@@ -707,14 +534,14 @@ export const ProfilePage = (): JSX.Element => {
                   </div>
                 </div>
 
-                {/* ROCKAGE Description - Mobile Optimized */}
+                {/* Bio - All details in one place */}
                 <div className="mb-4 sm:mb-6">
-                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">
-                    {profileData?.brandDescription || "Rockage: Where fashion meets fearless attitude! Celebrate individuality with our premium 100% cotton, 250gsm oversized anime tees. Bold designs like \"HONOR BOUND\" and \"GENJUTSU\" in sizes S-XXL. Wear your attitude. Rock your age!"}
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg whitespace-pre-line">
+                    {profileData?.brandDescription || profileData?.bio || "Add your bio and all details by clicking Edit Profile"}
                   </p>
                 </div>
 
-                {/* Stats - Mobile Responsive */}
+                {/* Stats */}
                 <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6">
                   <span className="flex items-center gap-1 sm:gap-2">
                     <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-400" style={{ borderRadius: '1px' }}></div>
@@ -731,25 +558,12 @@ export const ProfilePage = (): JSX.Element => {
                     3 Designs
                   </span>
                 </div>
-
-                {/* Collaborators - Mobile Centered */}
-                <div className="flex items-center justify-center lg:justify-start gap-3">
-                  <span className="text-xs sm:text-sm text-gray-600 font-medium">Collaborators</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 sm:h-8 sm:w-8 bg-gray-100 hover:bg-gray-200"
-                    style={{ borderRadius: '1px' }}
-                  >
-                    <Plus className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
-                  </Button>
-                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Action Buttons (Brand only) - Mobile Responsive */}
+        {/* Action Buttons (Brand only) */}
         {isActuallyBrand && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <Button
@@ -771,7 +585,7 @@ export const ProfilePage = (): JSX.Element => {
           </div>
         )}
 
-        {/* Navigation Tabs - Mobile Scrollable */}
+        {/* Navigation Tabs */}
         <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 p-1 sm:p-2 bg-gray-100 border border-gray-200 overflow-x-auto scrollbar-hide min-w-0" style={{ borderRadius: '1px' }}>
           {tabs.map((tab) => (
             <Button
@@ -790,7 +604,7 @@ export const ProfilePage = (): JSX.Element => {
           ))}
         </div>
 
-        {/* Tab Content - Mobile Optimized with Increased Width */}
+        {/* Tab Content */}
         <div className="bg-white border border-gray-200 p-4 sm:p-6 lg:p-8" style={{ borderRadius: '1px' }}>
           {getTabContent()}
         </div>

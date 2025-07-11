@@ -59,7 +59,7 @@ export const DashboardPage = (): JSX.Element => {
     return () => clearInterval(interval);
   }, [adsData.length]);
 
-  // Demo product data with sale prices and ratings
+  // Single demo product - Brand will add their own products
   const demoProducts = [
     {
       id: 1,
@@ -74,51 +74,6 @@ export const DashboardPage = (): JSX.Element => {
       rating: 4.5,
       reviews: 128,
       slug: "oversized-t-shirt",
-      isOnSale: true
-    },
-    {
-      id: 2,
-      name: "Honor Bound Tee",
-      brand: "ROCKAGE",
-      originalPrice: 1299,
-      salePrice: 799,
-      discount: 38,
-      image: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      category: "T-Shirts",
-      isNew: false,
-      rating: 4.7,
-      reviews: 95,
-      slug: "honor-bound-tee",
-      isOnSale: true
-    },
-    {
-      id: 3,
-      name: "Genjutsu Design",
-      brand: "ROCKAGE",
-      originalPrice: 1499,
-      salePrice: 899,
-      discount: 40,
-      image: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      category: "T-Shirts",
-      isNew: true,
-      rating: 4.6,
-      reviews: 76,
-      slug: "genjutsu-design",
-      isOnSale: true
-    },
-    {
-      id: 4,
-      name: "Anime Spirit Hoodie",
-      brand: "ROCKAGE",
-      originalPrice: 2199,
-      salePrice: 1299,
-      discount: 41,
-      image: "https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      category: "Hoodies",
-      isNew: false,
-      rating: 4.8,
-      reviews: 142,
-      slug: "anime-spirit-hoodie",
       isOnSale: true
     }
   ];
@@ -177,24 +132,11 @@ export const DashboardPage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - Fixed Noise Style */}
+      {/* Header - Logo on Left, No Hamburger Menu */}
       <header className="w-full bg-black text-white sticky top-0 z-50">
         <div className="w-full h-[60px] mx-auto relative flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
-          {/* Left - Menu Icon */}
+          {/* Left - Logo (replacing hamburger menu) */}
           <div className="flex items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-10 w-10 text-white hover:bg-white/20 transition-colors duration-200"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </Button>
-          </div>
-
-          {/* Center - Logo */}
-          <div className="absolute left-1/2 transform -translate-x-1/2">
             <img
               src="https://i.postimg.cc/xTVNmCps/Dream-X-Store.png"
               alt="Dream X Store"
@@ -269,7 +211,7 @@ export const DashboardPage = (): JSX.Element => {
         </div>
       </header>
 
-      {/* Main Content - Removed padding */}
+      {/* Main Content */}
       <main>
         {/* Sliding Ads Banner - Full Width */}
         <section className="relative w-full h-[400px] sm:h-[500px] overflow-hidden">
@@ -496,17 +438,17 @@ export const DashboardPage = (): JSX.Element => {
             </div>
           )}
 
-          {/* Products Grid - Noise Style */}
+          {/* Single Product Display - Brand will add more products */}
           {!searchQuery && (
             <div className="mb-8">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Popular Products</h3>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Featured Product</h3>
                 <Button variant="link" className="text-sm text-blue-600 p-0 h-auto hover:text-blue-800">
-                  See all
+                  Brand will add more
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto">
                 {demoProducts.map((product) => (
                   <Card 
                     key={product.id}
@@ -551,20 +493,20 @@ export const DashboardPage = (): JSX.Element => {
                         </Button>
 
                         {/* Product Info */}
-                        <div className="p-3">
-                          <h4 className="text-sm font-medium text-gray-900 mb-1 line-clamp-2">
+                        <div className="p-4">
+                          <h4 className="text-base font-medium text-gray-900 mb-1 line-clamp-2">
                             {product.name}
                           </h4>
-                          <p className="text-xs text-gray-500 mb-2">{product.brand}</p>
+                          <p className="text-sm text-gray-500 mb-2">{product.brand}</p>
                           
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-sm font-bold text-gray-900">₹{product.salePrice}</span>
-                            <span className="text-xs text-gray-500 line-through">₹{product.originalPrice}</span>
-                            <span className="text-xs text-green-600 font-medium">{product.discount}% off</span>
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="text-lg font-bold text-gray-900">₹{product.salePrice}</span>
+                            <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                            <span className="text-sm text-green-600 font-medium">{product.discount}% off</span>
                           </div>
 
                           {/* Sale Price Button */}
-                          <div className="bg-black text-white text-xs px-3 py-1 rounded-full text-center">
+                          <div className="bg-black text-white text-sm px-4 py-2 rounded-full text-center">
                             Sale price: ₹{product.salePrice}
                           </div>
                         </div>
@@ -576,18 +518,24 @@ export const DashboardPage = (): JSX.Element => {
             </div>
           )}
 
-          {/* Empty State Message - Only show when not searching */}
+          {/* Message for Brand to Add More Products */}
           {!searchQuery && (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ShoppingBag className="h-8 w-8 text-gray-400" />
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                More Products Coming Soon!
+                Ready to Add More Products?
               </h3>
-              <p className="text-sm text-gray-500 max-w-sm mx-auto">
-                Brands will add their amazing products here. This is just a demo product to show the layout.
+              <p className="text-sm text-gray-500 max-w-sm mx-auto mb-4">
+                This is your featured product. Brands can add more amazing products to showcase their collection.
               </p>
+              <Button 
+                onClick={() => navigate('/profile')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full"
+              >
+                Go to Profile to Add Products
+              </Button>
             </div>
           )}
         </div>
