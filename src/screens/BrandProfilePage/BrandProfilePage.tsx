@@ -1,5 +1,5 @@
-import React from "react";
-import { ArrowLeft, ExternalLink, Star, MapPin, MessageSquare, Share2, Globe, Twitter, Linkedin, Dribbble, Mail } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowLeft, Star, MapPin, MessageSquare, Share2, Globe, Twitter, Linkedin, Dribbble, Mail } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export const BrandProfilePage = (): JSX.Element => {
   const navigate = useNavigate();
   const { brandName } = useParams<{ brandName: string }>();
+  const [activeTab, setActiveTab] = useState("My Story");
 
   // Demo brand data - in real app, fetch based on brandName
   const brandData = {
@@ -24,6 +25,11 @@ export const BrandProfilePage = (): JSX.Element => {
     ],
     totalProducts: 3,
     totalSales: 105,
+    story: {
+      intro: "In 20+ years, I've built and led teams, shipped product at scale, and helped organizations rediscover how to work together.",
+      description: "I'm a systems thinker that takes pride in bringing world-class consumer grade user experiences to business tools and products that tread new territory or reimagine tired and inadequate norms.",
+      details: "Working at the micro and macro level, I balance short term tactical"
+    },
     products: [
       {
         id: 1,
@@ -52,15 +58,115 @@ export const BrandProfilePage = (): JSX.Element => {
     ]
   };
 
+  const tabs = ["My Story", "Skills", "Projects", "Experience"];
+
   const handleProductClick = (slug: string) => {
     navigate(`/product/${slug}`);
   };
 
+  const getTabContent = () => {
+    switch (activeTab) {
+      case "My Story":
+        return (
+          <div className="space-y-6">
+            <h2 className="text-3xl font-light text-gray-900 mb-6">My Story</h2>
+            <div className="space-y-6 text-gray-700 leading-relaxed">
+              <p className="text-lg">
+                {brandData.story.intro}
+              </p>
+              <p className="text-lg">
+                {brandData.story.description}
+              </p>
+              <p className="text-lg">
+                {brandData.story.details}
+              </p>
+            </div>
+          </div>
+        );
+      case "Skills":
+        return (
+          <div className="space-y-6">
+            <h2 className="text-3xl font-light text-gray-900 mb-6">Skills</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {brandData.superpowerSkills.map((skill, index) => (
+                <div key={index} className="bg-white p-4 rounded-lg border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <Star className="w-4 h-4 text-yellow-500" />
+                    <span className="font-medium">{skill}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      case "Projects":
+        return (
+          <div className="space-y-6">
+            <h2 className="text-3xl font-light text-gray-900 mb-6">Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {brandData.products.map((product) => (
+                <Card 
+                  key={product.id}
+                  className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                  onClick={() => handleProductClick(product.slug)}
+                >
+                  <CardContent className="p-0">
+                    <div className="relative">
+                      <div className="aspect-[4/5] bg-gray-100 overflow-hidden">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                          {product.name}
+                        </h3>
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl font-bold text-gray-900">
+                            ₹{product.price}
+                          </span>
+                          <span className="text-sm text-gray-500 line-through">
+                            ₹{product.originalPrice}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        );
+      case "Experience":
+        return (
+          <div className="space-y-6">
+            <h2 className="text-3xl font-light text-gray-900 mb-6">Experience</h2>
+            <div className="space-y-4">
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Senior Designer</h3>
+                <p className="text-gray-600 mb-2">Dream X Store • 2020 - Present</p>
+                <p className="text-gray-700">Leading design initiatives for fashion e-commerce platform, focusing on user experience and brand identity.</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Product Designer</h3>
+                <p className="text-gray-600 mb-2">Fashion Tech Co • 2018 - 2020</p>
+                <p className="text-gray-700">Designed user interfaces for mobile and web applications in the fashion industry.</p>
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-orange-50">
+    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #fef3cd 100%)' }}>
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between max-w-4xl mx-auto">
+        <div className="flex items-center justify-between max-w-6xl mx-auto">
           <Button
             variant="ghost"
             size="icon"
@@ -76,22 +182,27 @@ export const BrandProfilePage = (): JSX.Element => {
         </div>
       </header>
 
-      {/* Profile Card */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <Card className="bg-white/80 backdrop-blur-sm border border-white/20 shadow-xl rounded-3xl overflow-hidden">
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Profile Header Card */}
+        <Card className="bg-white/95 backdrop-blur-sm border border-white/30 shadow-xl rounded-3xl overflow-hidden mb-8">
           <CardContent className="p-0">
             {/* Decorative Background Pattern */}
-            <div className="relative bg-gradient-to-br from-pink-100 to-orange-100 p-8">
-              <div className="absolute inset-0 opacity-10">
-                <div className="grid grid-cols-8 gap-4 h-full">
-                  {Array.from({ length: 32 }).map((_, i) => (
-                    <div key={i} className="bg-white rounded-lg"></div>
-                  ))}
-                </div>
+            <div className="relative" style={{ background: 'linear-gradient(135deg, #fce7f3 0%, #f3e8ff 50%, #fef3cd 100%)' }}>
+              {/* Geometric Pattern Overlay */}
+              <div className="absolute inset-0 opacity-20">
+                <svg width="100%" height="100%" viewBox="0 0 400 300" className="w-full h-full">
+                  <defs>
+                    <pattern id="geometric" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                      <polygon points="20,0 40,20 20,40 0,20" fill="white" opacity="0.3"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#geometric)" />
+                </svg>
               </div>
               
               {/* Profile Content */}
-              <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+              <div className="relative z-10 flex flex-col items-center text-center space-y-6 p-12">
                 {/* Profile Image */}
                 <div className="relative">
                   <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
@@ -116,7 +227,7 @@ export const BrandProfilePage = (): JSX.Element => {
                 {/* Name and Verification */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-center gap-2">
-                    <h1 className="text-2xl font-bold text-gray-900">{brandData.name}</h1>
+                    <h1 className="text-3xl font-bold text-gray-900">{brandData.name}</h1>
                     {brandData.verified && (
                       <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
                         <Star className="w-4 h-4 text-white fill-current" />
@@ -176,7 +287,7 @@ export const BrandProfilePage = (): JSX.Element => {
                 </div>
 
                 {/* Role and Experience */}
-                <div className="flex items-center gap-8 text-center">
+                <div className="flex items-center gap-12 text-center">
                   <div className="space-y-1">
                     <p className="text-sm text-gray-600 font-medium">Role</p>
                     <p className="text-2xl font-bold text-gray-900">{brandData.role}</p>
@@ -190,11 +301,11 @@ export const BrandProfilePage = (): JSX.Element => {
                 {/* Superpower Skills */}
                 <div className="space-y-3">
                   <p className="text-sm text-gray-600 font-medium">Superpower Skills</p>
-                  <div className="flex flex-wrap justify-center gap-2">
+                  <div className="flex flex-wrap justify-center gap-3">
                     {brandData.superpowerSkills.map((skill, index) => (
                       <div 
                         key={index}
-                        className="flex items-center gap-1 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-gray-700"
+                        className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-700 border border-white/30"
                       >
                         <Star className="w-3 h-3 text-yellow-500" />
                         <span>{skill}</span>
@@ -206,90 +317,32 @@ export const BrandProfilePage = (): JSX.Element => {
             </div>
           </CardContent>
         </Card>
-      </div>
 
-      {/* Navigation Tabs */}
-      <div className="max-w-4xl mx-auto px-4 mb-8">
-        <div className="flex justify-center">
-          <div className="flex bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg">
-            <Button 
-              variant="ghost"
-              className="rounded-full px-6 py-2 text-sm font-medium"
-            >
-              Skills
-            </Button>
-            <Button 
-              variant="ghost"
-              className="rounded-full px-6 py-2 text-sm font-medium bg-white shadow-sm"
-            >
-              Projects
-            </Button>
-            <Button 
-              variant="ghost"
-              className="rounded-full px-6 py-2 text-sm font-medium"
-            >
-              Experience
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Products Section */}
-      <section className="pb-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {brandData.products.map((product) => (
-              <Card 
-                key={product.id}
-                className="bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
-                onClick={() => handleProductClick(product.slug)}
+        {/* Navigation Tabs */}
+        <div className="flex justify-center mb-8">
+          <div className="flex bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg border border-white/30">
+            {tabs.map((tab) => (
+              <Button 
+                key={tab}
+                variant="ghost"
+                onClick={() => setActiveTab(tab)}
+                className={`rounded-full px-6 py-2 text-sm font-medium transition-all ${
+                  activeTab === tab 
+                    ? 'bg-white shadow-sm text-gray-900' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
               >
-                <CardContent className="p-0">
-                  <div className="relative">
-                    {/* Product Image */}
-                    <div className="aspect-[4/5] bg-gray-100 overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-
-                    {/* Cart Button */}
-                    <Button
-                      size="icon"
-                      className="absolute bottom-4 right-4 w-12 h-12 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-900 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        // Handle add to cart
-                      }}
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6m0 0h15M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z" />
-                      </svg>
-                    </Button>
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      {product.name}
-                    </h3>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xl font-bold text-gray-900">
-                        ₹{product.price}
-                      </span>
-                      <span className="text-sm text-gray-500 line-through">
-                        ₹{product.originalPrice}
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                {tab}
+              </Button>
             ))}
           </div>
         </div>
-      </section>
+
+        {/* Tab Content */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/30">
+          {getTabContent()}
+        </div>
+      </div>
     </div>
   );
 };
