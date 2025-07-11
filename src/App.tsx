@@ -8,7 +8,6 @@ import { DashboardPage } from "./screens/DashboardPage";
 import { ProductPage } from "./screens/ProductPage";
 import { CartPage } from "./screens/CartPage";
 import { AuthPage } from "./screens/AuthPage";
-import { ProfilePage } from "./screens/ProfilePage";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/about" element={<LandingPage />} />
             <Route path="/contact" element={<LandingPage />} />
             <Route path="/cart" element={<CartPage />} />
