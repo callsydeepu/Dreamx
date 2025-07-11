@@ -364,15 +364,20 @@ export const ProductPage = (): JSX.Element => {
   };
 
   const handlePayNow = () => {
-    console.log("Pay now:", {
-      product: product.name,
+    // Create direct buy item
+    const directBuyItem = {
+      name: product.name,
+      price: product.salePrice,
       size: selectedSize,
       quantity: quantity,
-      price: product.salePrice,
-      total: product.salePrice * quantity
+      image: product.images[0],
+      slug: product.slug
+    };
+    
+    // Navigate to checkout with direct buy item
+    navigate('/checkout', {
+      state: { directBuyItem }
     });
-    // You can integrate with payment gateway here
-    alert(`Proceeding to payment for ${quantity} x ${product.name} (Size: ${selectedSize})\nTotal: ₹${product.salePrice * quantity}`);
   };
 
   const handleShare = async () => {

@@ -14,9 +14,8 @@ export const CartPage: React.FC = () => {
   };
 
   const handleCheckout = () => {
-    // Handle checkout functionality
-    console.log('Proceeding to checkout with items:', cartItems);
-    alert(`Proceeding to checkout with ${getTotalItems()} items\nTotal: ₹${getTotalPrice()}`);
+    // Navigate to checkout page
+    navigate('/checkout');
   };
 
   const handleContinueShopping = () => {
