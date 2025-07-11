@@ -451,25 +451,25 @@ export const ProfilePage = (): JSX.Element => {
               </Button>
             </div>
             {/* Mobile: 2 columns, Tablet: 2 columns, Desktop: 3 columns */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
               {brandProducts.map((product) => (
                 <Card key={product.id} className="border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 bg-white" style={{ borderRadius: '1px' }}>
                   <CardContent className="p-0">
-                    <div className="aspect-[4/5] bg-gray-50 overflow-hidden">
+                    <div className="aspect-square sm:aspect-[4/5] bg-gray-50 overflow-hidden">
                       <img
                         src={product.image}
                         alt={product.name}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="p-3 sm:p-4 lg:p-5">
-                      <h4 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base line-clamp-2">{product.name}</h4>
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                        <div className="flex items-center gap-1 sm:gap-2">
-                          <span className="text-sm sm:text-lg font-bold text-gray-900">₹{product.price}</span>
-                          <span className="text-xs sm:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                    <div className="p-2 sm:p-3 md:p-4 lg:p-5">
+                      <h4 className="font-semibold text-gray-900 mb-1 sm:mb-2 md:mb-3 text-xs sm:text-sm md:text-base line-clamp-2 leading-tight">{product.name}</h4>
+                      <div className="flex flex-col gap-1 sm:gap-2">
+                        <div className="flex items-center gap-1 flex-wrap">
+                          <span className="text-xs sm:text-sm md:text-lg font-bold text-gray-900">₹{product.price}</span>
+                          <span className="text-xs sm:text-xs md:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
                         </div>
-                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 px-2 sm:px-3 py-1 text-xs w-fit" style={{ borderRadius: '1px' }}>
+                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 px-1 sm:px-2 md:px-3 py-0.5 sm:py-1 text-xs w-fit" style={{ borderRadius: '1px' }}>
                           {product.sales} sold
                         </Badge>
                       </div>
