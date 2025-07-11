@@ -14,8 +14,10 @@ export const CartPage: React.FC = () => {
   };
 
   const handleCheckout = () => {
-    // Navigate to checkout page
-    navigate('/checkout');
+    // Navigate to checkout page with cart context
+    navigate('/checkout', {
+      state: { fromCart: true }
+    });
   };
 
   const handleContinueShopping = () => {

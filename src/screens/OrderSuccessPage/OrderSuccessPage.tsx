@@ -38,6 +38,13 @@ export const OrderSuccessPage = (): JSX.Element => {
     alert('Invoice download will be available soon!');
   };
 
+  const handleGoToCart = () => {
+    navigate('/cart');
+  };
+
+  const handleContinueShopping = () => {
+    navigate('/dashboard');
+  };
   if (!orderData) {
     return <div>Loading...</div>;
   }
@@ -201,7 +208,7 @@ export const OrderSuccessPage = (): JSX.Element => {
                   </Button>
                   
                   <Button
-                    onClick={() => navigate('/cart', { replace: true })}
+                    onClick={handleGoToCart}
                     variant="outline"
                     className="w-full justify-start rounded-[1px]"
                   >
@@ -256,7 +263,7 @@ export const OrderSuccessPage = (): JSX.Element => {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Button
-            onClick={() => navigate('/dashboard', { replace: true })}
+            onClick={handleContinueShopping}
             className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-[1px]"
           >
             <Home className="w-5 h-5 mr-2" />
@@ -264,7 +271,7 @@ export const OrderSuccessPage = (): JSX.Element => {
           </Button>
           
           <Button
-            onClick={() => navigate('/cart', { replace: true })}
+            onClick={handleGoToCart}
             variant="outline"
             className="flex-1 h-12 border-gray-300 rounded-[1px]"
           >

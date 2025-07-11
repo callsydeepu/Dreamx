@@ -110,7 +110,8 @@ export const CheckoutPage = (): JSX.Element => {
           total: totalAmount,
           shipping: shippingData,
           payment: paymentData,
-          orderId: `ORD${Date.now()}`
+          orderId: `ORD${Date.now()}`,
+          fromCart: !directBuyItem // Track if order came from cart
         }
       }
     });
