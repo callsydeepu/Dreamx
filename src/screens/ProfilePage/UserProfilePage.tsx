@@ -153,10 +153,10 @@ const EditUserProfileModal = ({ isOpen, onClose, user, onSave }) => {
                   />
                 </div>
 
-                {/* Username */}
+                {/* Username - Now Editable */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Username
+                    Username <span className="text-blue-600 text-xs">(You can edit this)</span>
                   </label>
                   <input
                     type="text"
@@ -391,7 +391,7 @@ export const UserProfilePage = (): JSX.Element => {
   const { user, logout } = useAuth();
   const { getOrderHistory } = useCart();
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState("Orders");
+  const [activeTab, setActiveTab] = useState("Profile");
   const [profileData, setProfileData] = useState(user);
 
   if (!user) {
@@ -452,7 +452,7 @@ export const UserProfilePage = (): JSX.Element => {
     }
   ];
 
-  const tabs = ["Orders", "Wishlist", "Settings"];
+  const tabs = ["Profile", "My Orders", "Settings"];
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -471,7 +471,84 @@ export const UserProfilePage = (): JSX.Element => {
 
   const getTabContent = () => {
     switch (activeTab) {
-      case "Orders":
+      case "Profile":
+        return (
+          <div className="space-y-6 sm:space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Profile Information</h3>
+              <Button 
+                onClick={() => setShowEditProfile(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 w-full sm:w-auto"
+                style={{ borderRadius: '1px' }}
+              >
+                <Edit3 className="h-4 w-4 mr-2" />
+                Edit Profile
+              </Button>
+            </div>
+            
+            {/* Profile Information Cards */}
+            <div className="space-y-4">
+              <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Username</h4>
+                      <p className="text-gray-600">{profileData?.username || 'Not set'}</p>
+                      <Badge className="mt-2 bg-blue-100 text-blue-700 hover:bg-blue-100 text-xs" style={{ borderRadius: '1px' }}>
+                        You can edit this
+                      </Badge>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Email</h4>
+                      <p className="text-gray-600">{profileData?.email || 'Not set'}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Member Since</h4>
+                      <p className="text-gray-600">{profileData?.joinedDate || '2024-01-15'}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Account Type</h4>
+                      <Badge className="bg-green-100 text-green-700 hover:bg-green-100" style={{ borderRadius: '1px' }}>
+                        Customer
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
+                <CardContent className="p-6">
+                  <h4 className="font-semibold text-gray-900 mb-3">Bio</h4>
+                  <p className="text-gray-600 leading-relaxed">
+                    Fashion enthusiast and style curator. Love discovering new brands and unique designs.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
+                <CardContent className="p-6">
+                  <h4 className="font-semibold text-gray-900 mb-3">Statistics</h4>
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <p className="text-2xl font-bold text-blue-600">{userOrders.length}</p>
+                      <p className="text-sm text-gray-600">Total Orders</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-green-600">0</p>
+                      <p className="text-sm text-gray-600">Wishlist Items</p>
+                    </div>
+                    <div>
+                      <p className="text-2xl font-bold text-purple-600">₹{userOrders.reduce((sum, order) => sum + order.price, 0)}</p>
+                      <p className="text-sm text-gray-600">Total Spent</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        );
+
+      case "My Orders":
         return (
           <div className="space-y-6 sm:space-y-8">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -577,27 +654,6 @@ export const UserProfilePage = (): JSX.Element => {
                   </Button>
                 </div>
               )}
-            </div>
-          </div>
-        );
-
-      case "Wishlist":
-        return (
-          <div className="space-y-6 sm:space-y-8">
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">My Wishlist</h3>
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6" style={{ borderRadius: '1px' }}>
-                <Heart className="w-10 h-10 text-pink-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
-              <p className="text-gray-600 mb-6">Save items you love to see them here!</p>
-              <Button
-                onClick={() => navigate('/dashboard')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
-                style={{ borderRadius: '1px' }}
-              >
-                Discover Products
-              </Button>
             </div>
           </div>
         );

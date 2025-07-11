@@ -49,11 +49,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return true;
     }
     
-    // Regular user login
+    // Regular user login - Extract username from email
+    const username = email.includes('@') ? email.split('@')[0] : email;
     const regularUser: User = {
       id: 'user-1',
       email: email,
-      username: email.split('@')[0],
+      username: username,
       isBrand: false,
       joinedDate: new Date().toISOString().split('T')[0]
     };

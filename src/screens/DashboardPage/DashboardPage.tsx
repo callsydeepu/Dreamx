@@ -14,7 +14,7 @@ export const DashboardPage = (): JSX.Element => {
   const [isSearching, setIsSearching] = useState(false);
   const navigate = useNavigate();
   const { getTotalItems } = useCart();
-  const { user, logout } = useAuth();
+  const { user, isBrand } = useAuth();
 
   // Demo product data
   const demoProduct = {
