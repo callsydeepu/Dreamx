@@ -21,6 +21,7 @@ interface CartContextType {
   getTotalPrice: () => number;
   getOrderHistory: () => CartItem[];
   addToOrderHistory: (items: CartItem[]) => void;
+  clearOrderHistory: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -83,6 +84,12 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const addToOrderHistory = (items: CartItem[]) => {
     setOrderHistory(prev => [...prev, ...items]);
   };
+  
+  // Clear order history (useful for testing or user logout)
+  const clearOrderHistory = () => {
+    setOrderHistory([]);
+  };
+  
   return (
     <CartContext.Provider
       value={{
@@ -95,6 +102,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         getTotalPrice,
         getOrderHistory,
         addToOrderHistory,
+        clearOrderHistory,
       }}
     >
       {children}

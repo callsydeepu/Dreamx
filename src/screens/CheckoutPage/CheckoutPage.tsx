@@ -103,6 +103,7 @@ export const CheckoutPage = (): JSX.Element => {
     
     // Navigate to success page
     navigate('/order-success', {
+      replace: true, // Replace current history entry
       state: {
         orderData: {
           items: checkoutItems,

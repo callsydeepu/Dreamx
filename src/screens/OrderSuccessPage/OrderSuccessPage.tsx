@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Check, Package, Truck, Home, Download, Share2 } from "lucide-react";
+import { Check, Package, Truck, Home, Download, Share2, ShoppingBag } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
@@ -14,6 +14,13 @@ export const OrderSuccessPage = (): JSX.Element => {
     if (!orderData) {
       navigate('/');
     }
+    
+    // Clear the location state after component mounts to prevent back navigation issues
+    const timer = setTimeout(() => {
+      window.history.replaceState({}, '', window.location.pathname);
+    }, 1000);
+    
+    return () => clearTimeout(timer);
   }, [orderData, navigate]);
 
   const handleShare = () => {
@@ -194,12 +201,12 @@ export const OrderSuccessPage = (): JSX.Element => {
                   </Button>
                   
                   <Button
-                    onClick={() => navigate('/user-profile')}
+                    onClick={() => navigate('/cart', { replace: true })}
                     variant="outline"
                     className="w-full justify-start rounded-[1px]"
                   >
-                    <Package className="w-4 h-4 mr-2" />
-                    Track Order
+                    <ShoppingBag className="w-4 h-4 mr-2" />
+                    Go to Cart
                   </Button>
                 </div>
               </CardContent>
@@ -249,7 +256,7 @@ export const OrderSuccessPage = (): JSX.Element => {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/dashboard', { replace: true })}
             className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-[1px]"
           >
             <Home className="w-5 h-5 mr-2" />
@@ -257,12 +264,12 @@ export const OrderSuccessPage = (): JSX.Element => {
           </Button>
           
           <Button
-            onClick={() => navigate('/user-profile')}
+            onClick={() => navigate('/cart', { replace: true })}
             variant="outline"
             className="flex-1 h-12 border-gray-300 rounded-[1px]"
           >
-            <Package className="w-5 h-5 mr-2" />
-            View All Orders
+            <ShoppingBag className="w-5 h-5 mr-2" />
+            Go to Cart
           </Button>
         </div>
       </main>
