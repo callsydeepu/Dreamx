@@ -344,7 +344,7 @@ export const ProfilePage = (): JSX.Element => {
   const { cartItems } = useCart();
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showEditProfile, setShowEditProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState("Products");
+  const [activeTab, setActiveTab] = useState(isBrand ? "Products" : "Orders");
   const [profileData, setProfileData] = useState(user);
 
   if (!user) {
@@ -416,6 +416,7 @@ export const ProfilePage = (): JSX.Element => {
     ? ["Products", "Analytics", "Settings"]
     : ["Orders", "Wishlist", "Settings"];
 
+  console.log("User isBrand:", isBrand, "Tabs:", tabs, "Active tab:", activeTab);
   const getTabContent = () => {
     switch (activeTab) {
       case "Products":
@@ -733,33 +734,34 @@ export const ProfilePage = (): JSX.Element => {
 
         {/* Action Buttons (Brand only) - Mobile Responsive */}
         {isBrand && (
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
             <Button
               onClick={() => setShowAddProduct(true)}
-              className="flex-1 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
               style={{ borderRadius: '1px' }}
             >
               <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Add your Product
+              ADD PRODUCT
             </Button>
             <Button
+              onClick={() => navigate('/dashboard')}
               variant="outline"
-              className="flex-1 border-yellow-300 h-12 sm:h-14 text-sm sm:text-base font-semibold hover:bg-yellow-100"
+              className="w-full border-yellow-300 h-12 sm:h-14 text-sm sm:text-base font-semibold hover:bg-yellow-100"
               style={{ borderRadius: '1px' }}
             >
-              DASHBOARD
+              VIEW DASHBOARD
             </Button>
           </div>
         )}
 
         {/* Navigation Tabs - Mobile Scrollable */}
-        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 p-1 sm:p-2 bg-yellow-100/60 backdrop-blur-sm border border-yellow-200/50 overflow-x-auto scrollbar-hide" style={{ borderRadius: '1px' }}>
+        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 p-1 sm:p-2 bg-yellow-100/60 backdrop-blur-sm border border-yellow-200/50 overflow-x-auto scrollbar-hide min-w-0" style={{ borderRadius: '1px' }}>
           {tabs.map((tab) => (
             <Button
               key={tab}
               onClick={() => setActiveTab(tab)}
               variant="ghost"
-              className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
+              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 min-w-0 ${
                 activeTab === tab 
                   ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg' 
                   : 'text-amber-700 hover:text-amber-900 hover:bg-yellow-200/80'
