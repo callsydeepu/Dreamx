@@ -285,7 +285,7 @@ export const BrandProfilePage = (): JSX.Element => {
                     <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
                       <div className="bg-green-500 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
                         <div className="w-2 h-2 bg-white rounded-full"></div>
-                        Looking for Work
+                        {brandData.isBrand ? 'Open for Business' : 'Looking for Work'}
                       </div>
                     </div>
                   )}
