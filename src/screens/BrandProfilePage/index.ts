@@ -1,0 +1,1 @@
+export { BrandProfilePage } from "./BrandProfilePage";
