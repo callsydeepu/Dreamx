@@ -3,61 +3,128 @@ import { ArrowLeft, Star, MapPin, MessageSquare, Share2, Globe, Twitter, Linkedi
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const BrandProfilePage = (): JSX.Element => {
   const navigate = useNavigate();
   const { brandName } = useParams<{ brandName: string }>();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("My Story");
 
-  // Demo brand data - in real app, fetch based on brandName
-  const brandData = {
-    name: "Brooklyn Simmons",
-    profileImage: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
-    role: "Design",
-    experience: "10 years",
-    location: "Chicago, IL",
-    verified: true,
-    lookingForWork: true,
-    superpowerSkills: [
-      "Interaction Design",
-      "Figma",
-      "User Research"
-    ],
-    totalProducts: 3,
-    totalSales: 105,
-    story: {
-      intro: "In 20+ years, I've built and led teams, shipped product at scale, and helped organizations rediscover how to work together.",
-      description: "I'm a systems thinker that takes pride in bringing world-class consumer grade user experiences to business tools and products that tread new territory or reimagine tired and inadequate norms.",
-      details: "Working at the micro and macro level, I balance short term tactical"
-    },
-    products: [
-      {
-        id: 1,
-        name: "Oversized t shirt",
-        price: 699,
-        originalPrice: 1399,
-        image: "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
-        slug: "oversized-t-shirt"
-      },
-      {
-        id: 2,
-        name: "Honor Bound Tee",
-        price: 799,
-        originalPrice: 1299,
-        image: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-        slug: "honor-bound-tee"
-      },
-      {
-        id: 3,
-        name: "Genjutsu Design",
-        price: 899,
-        originalPrice: 1499,
-        image: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-        slug: "genjutsu-design"
-      }
-    ]
+  // If user is not authenticated, redirect to auth page
+  if (!user) {
+    navigate('/auth');
+    return <div></div>;
+  }
+
+  // Get brand data based on authenticated user or URL parameter
+  const getBrandData = () => {
+    // If viewing own profile or if brandName matches user's brand
+    if (!brandName || brandName === user.brandName || brandName === user.username) {
+      return {
+        name: user.isBrand ? user.brandName || user.username : user.username,
+        username: user.username,
+        email: user.email,
+        profileImage: user.brandLogo || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+        role: user.isBrand ? "Brand Owner" : "Design",
+        experience: "10 years",
+        location: "Chicago, IL",
+        verified: true,
+        lookingForWork: !user.isBrand,
+        isBrand: user.isBrand,
+        brandDescription: user.brandDescription || "Passionate about creating amazing designs and experiences.",
+        joinedDate: user.joinedDate,
+        superpowerSkills: user.isBrand ? [
+          "Brand Design",
+          "Product Development", 
+          "Fashion Design"
+        ] : [
+          "Interaction Design",
+          "Figma",
+          "User Research"
+        ],
+        totalProducts: 3,
+        totalSales: 105,
+        story: {
+          intro: user.isBrand 
+            ? user.brandDescription || "We are passionate about creating unique and high-quality products that resonate with our customers."
+            : "In 20+ years, I've built and led teams, shipped product at scale, and helped organizations rediscover how to work together.",
+          description: user.isBrand
+            ? "Our brand focuses on delivering exceptional quality and innovative designs that stand out in the market."
+            : "I'm a systems thinker that takes pride in bringing world-class consumer grade user experiences to business tools and products that tread new territory or reimagine tired and inadequate norms.",
+          details: user.isBrand
+            ? "We believe in the power of creativity and craftsmanship to create products that not only look great but also tell a story."
+            : "Working at the micro and macro level, I balance short term tactical decisions with long-term strategic vision."
+        },
+        products: [
+          {
+            id: 1,
+            name: "Oversized t shirt",
+            price: 699,
+            originalPrice: 1399,
+            image: "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
+            slug: "oversized-t-shirt"
+          },
+          {
+            id: 2,
+            name: "Honor Bound Tee",
+            price: 799,
+            originalPrice: 1299,
+            image: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+            slug: "honor-bound-tee"
+          },
+          {
+            id: 3,
+            name: "Genjutsu Design",
+            price: 899,
+            originalPrice: 1499,
+            image: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+            slug: "genjutsu-design"
+          }
+        ]
+      };
+    } else {
+      // Viewing another brand's profile - in real app, fetch from API
+      return {
+        name: brandName,
+        username: brandName,
+        email: `${brandName}@example.com`,
+        profileImage: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+        role: "Brand Owner",
+        experience: "5 years",
+        location: "New York, NY",
+        verified: true,
+        lookingForWork: false,
+        isBrand: true,
+        brandDescription: "Creating innovative fashion designs for the modern world.",
+        joinedDate: "2023-01-01",
+        superpowerSkills: [
+          "Brand Design",
+          "Product Development",
+          "Fashion Design"
+        ],
+        totalProducts: 2,
+        totalSales: 50,
+        story: {
+          intro: "We are a creative brand focused on bringing unique designs to life.",
+          description: "Our mission is to create products that inspire and connect with people on a personal level.",
+          details: "Every piece we create tells a story and represents our commitment to quality and innovation."
+        },
+        products: [
+          {
+            id: 1,
+            name: "Designer Collection",
+            price: 999,
+            originalPrice: 1499,
+            image: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+            slug: "designer-collection"
+          }
+        ]
+      };
+    }
   };
 
+  const brandData = getBrandData();
   const tabs = ["My Story", "Skills", "Projects", "Experience"];
 
   const handleProductClick = (slug: string) => {
@@ -232,6 +299,15 @@ export const BrandProfilePage = (): JSX.Element => {
                       <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
                         <Star className="w-4 h-4 text-white fill-current" />
                       </div>
+                    )}
+                  </div>
+                  
+                  {/* Username and Email */}
+                  <div className="text-center space-y-1">
+                    <p className="text-gray-600 text-lg">@{brandData.username}</p>
+                    <p className="text-gray-500 text-sm">{brandData.email}</p>
+                    {brandData.joinedDate && (
+                      <p className="text-gray-500 text-xs">Joined {new Date(brandData.joinedDate).toLocaleDateString()}</p>
                     )}
                   </div>
                   
