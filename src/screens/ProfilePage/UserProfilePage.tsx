@@ -565,9 +565,9 @@ export const UserProfilePage = (): JSX.Element => {
               {userOrders.map((order) => (
                 <Card key={order.id} className="border border-gray-200 overflow-hidden bg-white hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
                   <CardContent className="p-4 sm:p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-center gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
                       {/* Product Image */}
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-50 overflow-hidden flex-shrink-0" style={{ borderRadius: '1px' }}>
+                      <div className="w-full h-48 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 bg-gray-50 overflow-hidden flex-shrink-0" style={{ borderRadius: '1px' }}>
                         <img
                           src={order.image}
                           alt={order.productName}
@@ -577,58 +577,63 @@ export const UserProfilePage = (): JSX.Element => {
                       
                       {/* Order Details */}
                       <div className="flex-1 min-w-0">
-                        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                        <div className="space-y-3 sm:space-y-4">
                           {/* Product Info */}
-                          <div className="lg:col-span-2">
+                          <div>
                             <h4 className="font-semibold text-gray-900 text-base sm:text-lg mb-1">{order.productName}</h4>
                             <p className="text-sm text-gray-600 mb-1">by {order.brand}</p>
                             <p className="text-xs text-gray-500">Order #{order.id}</p>
-                            <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
+                            <div className="flex items-center gap-3 sm:gap-4 mt-2 text-xs text-gray-500">
                               <span>Size: {order.size}</span>
                               <span>Qty: {order.quantity}</span>
                             </div>
                           </div>
                           
-                          {/* Order Dates */}
-                          <div className="space-y-1">
-                            <div>
-                              <p className="text-xs text-gray-500">Order Date</p>
-                              <p className="text-sm font-medium text-gray-900">{order.orderDate}</p>
+                          {/* Order Dates and Price/Status Row */}
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                            {/* Order Dates */}
+                            <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-col sm:gap-1">
+                              <div>
+                                <p className="text-xs text-gray-500">Order Date</p>
+                                <p className="text-sm font-medium text-gray-900">{order.orderDate}</p>
+                              </div>
+                              <div>
+                                <p className="text-xs text-gray-500">Delivery</p>
+                                <p className="text-sm text-gray-700">{order.deliveryDate}</p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="text-xs text-gray-500">Delivery</p>
-                              <p className="text-sm text-gray-700">{order.deliveryDate}</p>
-                            </div>
-                          </div>
-                          
-                          {/* Price and Status */}
-                          <div className="flex flex-col items-start lg:items-end gap-2">
-                            <p className="font-bold text-gray-900 text-lg">₹{order.price}</p>
-                            <Badge 
-                              className={`text-xs px-3 py-1 ${getStatusColor(order.status)}`}
-                              style={{ borderRadius: '1px' }}
-                            >
-                              {order.status}
-                            </Badge>
-                            <div className="flex gap-2 mt-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-xs px-3 py-1 h-8"
-                                style={{ borderRadius: '1px' }}
-                              >
-                                Track Order
-                              </Button>
-                              {order.status === 'Delivered' && (
+                            
+                            {/* Price and Status */}
+                            <div className="flex flex-col sm:items-end gap-2">
+                              <div className="flex items-center justify-between sm:flex-col sm:items-end sm:gap-1">
+                                <p className="font-bold text-gray-900 text-lg">₹{order.price}</p>
+                                <Badge 
+                                  className={`text-xs px-3 py-1 ${getStatusColor(order.status)}`}
+                                  style={{ borderRadius: '1px' }}
+                                >
+                                  {order.status}
+                                </Badge>
+                              </div>
+                              <div className="flex gap-2 mt-2">
                                 <Button
                                   variant="outline"
                                   size="sm"
                                   className="text-xs px-3 py-1 h-8"
                                   style={{ borderRadius: '1px' }}
                                 >
-                                  Review
+                                  Track Order
                                 </Button>
-                              )}
+                                {order.status === 'Delivered' && (
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="text-xs px-3 py-1 h-8"
+                                    style={{ borderRadius: '1px' }}
+                                  >
+                                    Review
+                                  </Button>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
