@@ -1,1 +1,0 @@
-export { BrandProfilePage } from "./BrandProfilePage";
