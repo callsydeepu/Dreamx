@@ -663,13 +663,13 @@ export const ProfilePage = (): JSX.Element => {
             <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-4 sm:gap-6 lg:gap-8">
               {/* Profile Image */}
               <div className="flex flex-col items-center">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center text-white text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4 shadow-lg" style={{ borderRadius: '1px' }}>
+                <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-yellow-500 to-amber-600 flex items-center justify-center text-white text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4 shadow-lg rounded-full">
                   {isBrand ? profileData?.brandName?.charAt(0) || 'R' : profileData?.username?.charAt(0)?.toUpperCase()}
                 </div>
                 
                 {/* Verified Brand Badge */}
-                <Badge className="bg-gradient-to-r from-yellow-500 to-amber-500 text-white hover:from-yellow-600 hover:to-amber-600 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium shadow-lg" style={{ borderRadius: '1px' }}>
-                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white mr-1 sm:mr-2" style={{ borderRadius: '1px' }}></div>
+                <Badge className="bg-blue-600 text-white hover:bg-blue-600 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium shadow-lg rounded-md">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white mr-1 sm:mr-2 rounded-sm"></div>
                   Verified Brand
                 </Badge>
               </div>
