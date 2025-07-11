@@ -443,9 +443,6 @@ export const DashboardPage = (): JSX.Element => {
             <div className="mb-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Featured Product</h3>
-                <Button variant="link" className="text-sm text-blue-600 p-0 h-auto hover:text-blue-800">
-                  Brand will add more
-                </Button>
               </div>
 
               <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto">
@@ -514,6 +511,23 @@ export const DashboardPage = (): JSX.Element => {
                     </CardContent>
                   </Card>
                 ))}
+              </div>
+
+              {/* View More Section */}
+              <div className="text-center mt-8">
+                <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <ShoppingBag className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Ready to Add More Products?</h3>
+                <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                  This is your featured product. Brands can add more amazing products to showcase their collection.
+                </p>
+                <Button 
+                  onClick={handleProfileClick}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
+                >
+                  View More
+                </Button>
               </div>
             </div>
           )}
