@@ -81,14 +81,8 @@ export const AuthPage = (): JSX.Element => {
     try {
       const success = await login(formData.email, formData.password);
       if (success) {
-        // Check if user is a brand or regular user and redirect accordingly
-        if (formData.email === 'rockage112@gmail.com' && formData.password === 'Abhishek@123') {
-          // Brand user - redirect to dashboard
-          navigate('/dashboard');
-        } else {
-          // Regular user - redirect to user profile page
-          navigate('/user-profile');
-        }
+        // Both users and brands go to dashboard after login
+        navigate('/dashboard');
       } else {
         setErrors({ email: 'Invalid credentials' });
       }
@@ -101,9 +95,9 @@ export const AuthPage = (): JSX.Element => {
 
   const handleGoogleAuth = () => {
     console.log(`${authMode} with Google`);
-    // Simulate Google auth success and redirect to user profile for regular users
+    // Simulate Google auth success and redirect to dashboard for all users
     setTimeout(() => {
-      navigate('/user-profile');
+      navigate('/dashboard');
     }, 1000);
   };
 

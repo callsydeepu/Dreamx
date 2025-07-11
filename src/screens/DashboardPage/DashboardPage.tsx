@@ -64,7 +64,7 @@ export const DashboardPage = (): JSX.Element => {
 
   const handleProfileClick = () => {
     // Navigate to appropriate profile page based on user type
-    if (user?.isBrand || isBrand) {
+    if (user?.isBrand) {
       navigate('/profile');
     } else {
       navigate('/user-profile');
