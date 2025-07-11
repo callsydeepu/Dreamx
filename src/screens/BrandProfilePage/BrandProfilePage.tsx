@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, ExternalLink, Star, MapPin, MessageSquare, Share2, Globe, Twitter, Linkedin, Dribbble, Mail } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,10 +10,18 @@ export const BrandProfilePage = (): JSX.Element => {
 
   // Demo brand data - in real app, fetch based on brandName
   const brandData = {
-    name: "ROCKAGE",
-    description: "Rockage: Where fashion meets fearless attitude! Celebrate individuality with our premium 100% cotton, 250gsm oversized anime tees. Bold designs like \"HONOR BOUND\" and \"GENJUTSU\" in sizes S-XXL. Wear your attitude. Rock your age!",
-    tagline: "WEAR YOUR ATTITUDE, ROCK YOUR AGE",
-    joinedDate: "2024-01-15",
+    name: "Brooklyn Simmons",
+    profileImage: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+    role: "Design",
+    experience: "10 years",
+    location: "Chicago, IL",
+    verified: true,
+    lookingForWork: true,
+    superpowerSkills: [
+      "Interaction Design",
+      "Figma",
+      "User Research"
+    ],
     totalProducts: 3,
     totalSales: 105,
     products: [
@@ -49,85 +57,191 @@ export const BrandProfilePage = (): JSX.Element => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-orange-50">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800 px-4 py-3">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200 px-4 py-3">
+        <div className="flex items-center justify-between max-w-4xl mx-auto">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="h-10 w-10 rounded-[1px] hover:bg-gray-800 text-white"
+            className="h-10 w-10 rounded-full hover:bg-gray-100 text-gray-700"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
           
-          <h1 className="text-lg font-medium">{brandData.name}</h1>
+          <h1 className="text-lg font-medium text-gray-900">Profile</h1>
           
           <div className="w-10" />
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-gray-900 to-black py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center space-y-6">
-            {/* Brand Logo/Name */}
-            <div className="space-y-4">
-              <h1 className="text-6xl md:text-8xl font-bold text-white tracking-wider">
-                {brandData.name}
-              </h1>
-              <div className="w-32 h-1 bg-white mx-auto opacity-60"></div>
-            </div>
+      {/* Profile Card */}
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <Card className="bg-white/80 backdrop-blur-sm border border-white/20 shadow-xl rounded-3xl overflow-hidden">
+          <CardContent className="p-0">
+            {/* Decorative Background Pattern */}
+            <div className="relative bg-gradient-to-br from-pink-100 to-orange-100 p-8">
+              <div className="absolute inset-0 opacity-10">
+                <div className="grid grid-cols-8 gap-4 h-full">
+                  {Array.from({ length: 32 }).map((_, i) => (
+                    <div key={i} className="bg-white rounded-lg"></div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Profile Content */}
+              <div className="relative z-10 flex flex-col items-center text-center space-y-6">
+                {/* Profile Image */}
+                <div className="relative">
+                  <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img
+                      src={brandData.profileImage}
+                      alt={brandData.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Looking for Work Badge */}
+                  {brandData.lookingForWork && (
+                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-green-500 text-white text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                        Looking for Work
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-            {/* Brand Description */}
-            <div className="max-w-4xl mx-auto space-y-4">
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                {brandData.description}
-              </p>
-            </div>
+                {/* Name and Verification */}
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center gap-2">
+                    <h1 className="text-2xl font-bold text-gray-900">{brandData.name}</h1>
+                    {brandData.verified && (
+                      <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <Star className="w-4 h-4 text-white fill-current" />
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Location */}
+                  <div className="flex items-center justify-center gap-1 text-gray-600">
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-sm">{brandData.location}</span>
+                  </div>
+                </div>
 
-            {/* CTA Button */}
-            <div className="pt-6">
-              <Button className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-[1px] text-lg font-medium">
-                Explore Collection
-              </Button>
-            </div>
+                {/* Social Icons */}
+                <div className="flex items-center gap-3">
+                  <Button 
+                    size="icon"
+                    variant="outline"
+                    className="w-10 h-10 rounded-full border-gray-300 hover:bg-gray-100"
+                  >
+                    <Globe className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    size="icon"
+                    variant="outline"
+                    className="w-10 h-10 rounded-full border-gray-300 hover:bg-gray-100"
+                  >
+                    <Twitter className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    size="icon"
+                    variant="outline"
+                    className="w-10 h-10 rounded-full border-gray-300 hover:bg-gray-100"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    size="icon"
+                    variant="outline"
+                    className="w-10 h-10 rounded-full border-gray-300 hover:bg-gray-100"
+                  >
+                    <Dribbble className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    size="icon"
+                    className="w-10 h-10 rounded-full bg-gray-900 hover:bg-gray-800 text-white"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                  </Button>
+                  <Button 
+                    size="icon"
+                    className="w-10 h-10 rounded-full bg-gray-900 hover:bg-gray-800 text-white"
+                  >
+                    <Share2 className="w-4 h-4" />
+                  </Button>
+                </div>
 
-            {/* Tagline */}
-            <div className="pt-8">
-              <p className="text-2xl md:text-3xl font-light text-gray-400 tracking-widest">
-                {brandData.tagline}
-              </p>
+                {/* Role and Experience */}
+                <div className="flex items-center gap-8 text-center">
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-600 font-medium">Role</p>
+                    <p className="text-2xl font-bold text-gray-900">{brandData.role}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm text-gray-600 font-medium">Experience</p>
+                    <p className="text-2xl font-bold text-gray-900">{brandData.experience}</p>
+                  </div>
+                </div>
+
+                {/* Superpower Skills */}
+                <div className="space-y-3">
+                  <p className="text-sm text-gray-600 font-medium">Superpower Skills</p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {brandData.superpowerSkills.map((skill, index) => (
+                      <div 
+                        key={index}
+                        className="flex items-center gap-1 bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-sm text-gray-700"
+                      >
+                        <Star className="w-3 h-3 text-yellow-500" />
+                        <span>{skill}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Navigation Tabs */}
+      <div className="max-w-4xl mx-auto px-4 mb-8">
+        <div className="flex justify-center">
+          <div className="flex bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-lg">
+            <Button 
+              variant="ghost"
+              className="rounded-full px-6 py-2 text-sm font-medium"
+            >
+              Skills
+            </Button>
+            <Button 
+              variant="ghost"
+              className="rounded-full px-6 py-2 text-sm font-medium bg-white shadow-sm"
+            >
+              Projects
+            </Button>
+            <Button 
+              variant="ghost"
+              className="rounded-full px-6 py-2 text-sm font-medium"
+            >
+              Experience
+            </Button>
           </div>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 opacity-10">
-          <div className="text-9xl font-bold text-white transform rotate-12">
-            RA
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Products Section */}
-      <section className="py-16 bg-white text-black">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
-              Our Latest Collection
-            </h2>
-            <p className="text-lg text-gray-600">
-              Discover our premium designs crafted with passion
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="pb-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {brandData.products.map((product) => (
               <Card 
                 key={product.id}
-                className="border border-gray-200 rounded-[1px] overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
+                className="bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
                 onClick={() => handleProductClick(product.slug)}
               >
                 <CardContent className="p-0">
@@ -144,7 +258,7 @@ export const BrandProfilePage = (): JSX.Element => {
                     {/* Cart Button */}
                     <Button
                       size="icon"
-                      className="absolute bottom-4 right-4 w-12 h-12 bg-white hover:bg-gray-100 text-black rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute bottom-4 right-4 w-12 h-12 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-900 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       onClick={(e) => {
                         e.stopPropagation();
                         // Handle add to cart
@@ -157,7 +271,7 @@ export const BrandProfilePage = (): JSX.Element => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-6">
+                  <div className="p-4">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {product.name}
                     </h3>
@@ -173,53 +287,6 @@ export const BrandProfilePage = (): JSX.Element => {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Brand Stats */}
-      <section className="py-16 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white">{brandData.totalProducts}</p>
-              <p className="text-gray-400">Products</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white">{brandData.totalSales}+</p>
-              <p className="text-gray-400">Happy Customers</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-4xl font-bold text-white">2024</p>
-              <p className="text-gray-400">Established</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer CTA */}
-      <section className="py-16 bg-black">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Ready to Rock Your Style?
-          </h2>
-          <p className="text-lg text-gray-400">
-            Join thousands of customers who trust {brandData.name} for premium fashion
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              onClick={() => navigate('/dashboard')}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-[1px] text-lg font-medium"
-            >
-              Shop Now
-            </Button>
-            <Button 
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-black px-8 py-3 rounded-[1px] text-lg font-medium"
-            >
-              <ExternalLink className="w-5 h-5 mr-2" />
-              Visit Store
-            </Button>
           </div>
         </div>
       </section>
