@@ -63,7 +63,12 @@ export const DashboardPage = (): JSX.Element => {
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    // Navigate to appropriate profile page based on user type
+    if (user?.isBrand || isBrand) {
+      navigate('/profile');
+    } else {
+      navigate('/user-profile');
+    }
   };
 
   const totalCartItems = getTotalItems();
