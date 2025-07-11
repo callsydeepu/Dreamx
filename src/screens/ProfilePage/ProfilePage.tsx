@@ -435,7 +435,7 @@ export const ProfilePage = (): JSX.Element => {
             {/* Mobile: 2 columns, Tablet: 2 columns, Desktop: 3 columns */}
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
               {brandProducts.map((product) => (
-                <Card key={product.id} className="border border-yellow-200 overflow-hidden hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-yellow-50 to-amber-50 backdrop-blur-sm" style={{ borderRadius: '1px' }}>
+                <Card key={product.id} className="border border-yellow-200 overflow-hidden hover:shadow-2xl transition-all duration-300 bg-white backdrop-blur-sm" style={{ borderRadius: '1px' }}>
                   <CardContent className="p-0">
                     <div className="aspect-[4/5] bg-gradient-to-br from-yellow-100 to-amber-100 overflow-hidden">
                       <img
@@ -469,7 +469,7 @@ export const ProfilePage = (): JSX.Element => {
             <h3 className="text-xl sm:text-2xl font-semibold text-amber-900">My Orders</h3>
             <div className="space-y-3 sm:space-y-4">
               {userOrders.map((order) => (
-                <Card key={order.id} className="border border-yellow-200 overflow-hidden bg-gradient-to-br from-yellow-50 to-amber-50 backdrop-blur-sm hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
+                <Card key={order.id} className="border border-yellow-200 overflow-hidden bg-white backdrop-blur-sm hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
                   <CardContent className="p-4 sm:p-6">
                     <div className="flex items-center gap-3 sm:gap-4">
                       <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-100 to-amber-100 overflow-hidden flex-shrink-0" style={{ borderRadius: '1px' }}>
@@ -564,7 +564,7 @@ export const ProfilePage = (): JSX.Element => {
           <div className="space-y-6 sm:space-y-8">
             <h3 className="text-xl sm:text-2xl font-semibold text-amber-900">Settings</h3>
             <div className="space-y-3 sm:space-y-4">
-              <Card className="border border-yellow-200 bg-gradient-to-br from-yellow-50 to-amber-50 backdrop-blur-sm hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
+              <Card className="border border-yellow-200 bg-white backdrop-blur-sm hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                     <div>
@@ -583,7 +583,7 @@ export const ProfilePage = (): JSX.Element => {
                   </div>
                 </CardContent>
               </Card>
-              <Card className="border border-yellow-200 bg-gradient-to-br from-yellow-50 to-amber-50 backdrop-blur-sm hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
+              <Card className="border border-yellow-200 bg-white backdrop-blur-sm hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                     <div>
@@ -759,7 +759,7 @@ export const ProfilePage = (): JSX.Element => {
               key={tab}
               onClick={() => setActiveTab(tab)}
               variant="ghost"
-              className={`px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
+              className={`px-3 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                 activeTab === tab 
                   ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white shadow-lg' 
                   : 'text-amber-700 hover:text-amber-900 hover:bg-yellow-200/80'
