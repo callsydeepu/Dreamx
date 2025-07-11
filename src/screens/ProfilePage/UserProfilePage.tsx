@@ -394,18 +394,18 @@ export const UserProfilePage = (): JSX.Element => {
   const [activeTab, setActiveTab] = useState("Profile");
   const [profileData, setProfileData] = useState({
     ...user,
-    firstName: '',
-    lastName: '',
-    phone: '',
-    location: '',
-    bio: '',
-    dateOfBirth: '',
-    gender: '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    phone: user?.phone || '',
+    location: user?.location || '',
+    bio: user?.bio || '',
+    dateOfBirth: user?.dateOfBirth || '',
+    gender: user?.gender || '',
     socialLinks: {
-      instagram: '',
-      twitter: '',
-      linkedin: '',
-      website: ''
+      instagram: user?.socialLinks?.instagram || '',
+      twitter: user?.socialLinks?.twitter || '',
+      linkedin: user?.socialLinks?.linkedin || '',
+      website: user?.socialLinks?.website || ''
     }
   });
 
@@ -453,11 +453,11 @@ export const UserProfilePage = (): JSX.Element => {
               <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Profile Information</h3>
               <Button 
                 onClick={() => setShowEditProfile(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 w-full sm:w-auto"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 w-full sm:w-auto shadow-lg"
                 style={{ borderRadius: '1px' }}
               >
                 <Edit3 className="h-4 w-4 mr-2" />
-                Complete Profile
+                {(profileData?.firstName && profileData?.lastName) ? 'Edit Profile' : 'Complete Profile'}
               </Button>
             </div>
             
@@ -468,11 +468,15 @@ export const UserProfilePage = (): JSX.Element => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">First Name</h4>
-                      <p className="text-gray-400 italic">{profileData?.firstName || 'Not set - Click edit to add'}</p>
+                      <p className={`${profileData?.firstName ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.firstName || 'Not set - Click edit to add'}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Last Name</h4>
-                      <p className="text-gray-400 italic">{profileData?.lastName || 'Not set - Click edit to add'}</p>
+                      <p className={`${profileData?.lastName ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.lastName || 'Not set - Click edit to add'}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Username</h4>
@@ -487,19 +491,27 @@ export const UserProfilePage = (): JSX.Element => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
-                      <p className="text-gray-400 italic">{profileData?.phone || 'Not set - Click edit to add'}</p>
+                      <p className={`${profileData?.phone ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.phone || 'Not set - Click edit to add'}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Location</h4>
-                      <p className="text-gray-400 italic">{profileData?.location || 'Not set - Click edit to add'}</p>
+                      <p className={`${profileData?.location ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.location || 'Not set - Click edit to add'}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Date of Birth</h4>
-                      <p className="text-gray-400 italic">{profileData?.dateOfBirth || 'Not set - Click edit to add'}</p>
+                      <p className={`${profileData?.dateOfBirth ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.dateOfBirth || 'Not set - Click edit to add'}
+                      </p>
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Gender</h4>
-                      <p className="text-gray-400 italic">{profileData?.gender || 'Not set - Click edit to add'}</p>
+                      <p className={`${profileData?.gender ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.gender || 'Not set - Click edit to add'}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -508,8 +520,8 @@ export const UserProfilePage = (): JSX.Element => {
               <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
                 <CardContent className="p-6">
                   <h4 className="font-semibold text-gray-900 mb-3">Bio</h4>
-                  <p className="text-gray-400 italic">
-                    {profileData?.bio || 'No bio added yet - Click edit to add your bio and tell others about yourself!'}
+                  <p className={`${profileData?.bio ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                    {profileData?.bio || 'No bio added yet - Click "Complete Profile" to add your bio and tell others about yourself!'}
                   </p>
                 </CardContent>
               </Card>
@@ -520,19 +532,27 @@ export const UserProfilePage = (): JSX.Element => {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-gray-700 mb-1">Instagram</p>
-                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.instagram || 'Not set'}</p>
+                      <p className={`text-sm ${profileData?.socialLinks?.instagram ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.socialLinks?.instagram || 'Not set'}
+                      </p>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-700 mb-1">Twitter</p>
-                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.twitter || 'Not set'}</p>
+                      <p className={`text-sm ${profileData?.socialLinks?.twitter ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.socialLinks?.twitter || 'Not set'}
+                      </p>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-700 mb-1">LinkedIn</p>
-                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.linkedin || 'Not set'}</p>
+                      <p className={`text-sm ${profileData?.socialLinks?.linkedin ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.socialLinks?.linkedin || 'Not set'}
+                      </p>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-700 mb-1">Website</p>
-                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.website || 'Not set'}</p>
+                      <p className={`text-sm ${profileData?.socialLinks?.website ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                        {profileData?.socialLinks?.website || 'Not set'}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -731,14 +751,14 @@ export const UserProfilePage = (): JSX.Element => {
                     style={{ borderRadius: '1px' }}
                   >
                     <Edit3 className="h-4 w-4 mr-2" />
-                    Complete Profile
+                    {(profileData?.firstName && profileData?.lastName) ? 'Edit Profile' : 'Complete Profile'}
                   </Button>
                 </div>
 
                 {/* Empty Bio */}
                 <div className="mb-6">
-                  <p className="text-gray-400 leading-relaxed italic">
-                    No bio added yet. Click "Complete Profile" to add your bio and tell others about yourself!
+                  <p className={`leading-relaxed ${profileData?.bio ? 'text-gray-600' : 'text-gray-400 italic'}`}>
+                    {profileData?.bio || 'No bio added yet. Click "Complete Profile" to add your bio and tell others about yourself!'}
                   </p>
                 </div>
 
