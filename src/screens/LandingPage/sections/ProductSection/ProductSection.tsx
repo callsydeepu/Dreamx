@@ -166,20 +166,20 @@ export const ProductSection = (): JSX.Element => {
         {/* Products Horizontal Scroll with 1px radius */}
         <div className="relative">
           <div 
-            className="flex gap-4 sm:gap-5 md:gap-6 lg:gap-8 overflow-x-auto scrollbar-hide pb-4"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 xl:gap-8 pb-4 overflow-x-visible"
             id="products-scroll-container"
           >
             {products.map((product) => (
               <Card
                 key={product.id}
                 onClick={() => handleProductClick(product)}
-                className="flex-shrink-0 w-[200px] sm:w-[240px] md:w-[280px] lg:w-[320px] xl:w-[360px] border-0 rounded-[1px] overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
+                className="w-full border-0 rounded-[1px] overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-300"
                 id={`product-${product.slug}`} // Add unique ID for each product
                 data-product-slug={product.slug} // Additional data attribute for easier targeting
                 data-product-id={product.id}
               >
                 <CardContent className="p-0">
-                  <div className="relative w-full h-[280px] sm:h-[320px] md:h-[360px] lg:h-[400px] xl:h-[440px]">
+                  <div className="relative w-full aspect-[4/5]">
                     {/* Product Image with better error handling */}
                     <div
                       className="w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-105"
@@ -205,9 +205,9 @@ export const ProductSection = (): JSX.Element => {
                         e.stopPropagation();
                         // Handle wishlist functionality
                       }}
-                      className="absolute top-3 sm:top-4 right-3 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full border border-white/30 transition-all duration-300 hover:scale-110"
+                      className="absolute top-2 right-2 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full border border-white/30 transition-all duration-300 hover:scale-110"
                     >
-                      <Heart className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
+                      <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                     </Button>
 
                     {/* View/Arrow Icon - Positioned relative to text like in reference */}
@@ -218,17 +218,17 @@ export const ProductSection = (): JSX.Element => {
                         e.stopPropagation();
                         handleProductClick(product);
                       }}
-                      className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-white hover:bg-gray-100 rounded-full shadow-lg transition-all duration-300 hover:scale-110 border border-gray-200"
+                      className="absolute bottom-2 right-2 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-white hover:bg-gray-100 rounded-full shadow-lg transition-all duration-300 hover:scale-110 border border-gray-200"
                     >
-                      <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-black" />
+                      <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4 text-black" />
                     </Button>
 
                     {/* Product Info - Bottom Left - Positioned to align with arrow */}
-                    <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 text-white max-w-[calc(100%-80px)] sm:max-w-[calc(100%-100px)]">
-                      <h3 className="font-['Poppins',Helvetica] font-medium text-xs sm:text-sm md:text-base lg:text-lg mb-1 leading-tight line-clamp-2">
+                    <div className="absolute bottom-2 left-2 text-white max-w-[calc(100%-60px)] sm:max-w-[calc(100%-80px)]">
+                      <h3 className="font-['Poppins',Helvetica] font-medium text-xs sm:text-sm mb-1 leading-tight line-clamp-2">
                         {product.name}
                       </h3>
-                      <p className="font-['Poppins',Helvetica] font-medium text-xs sm:text-sm md:text-base text-white/90">
+                      <p className="font-['Poppins',Helvetica] font-medium text-xs sm:text-sm text-white/90">
                         {product.price}
                       </p>
                     </div>
