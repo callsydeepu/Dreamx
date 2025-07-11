@@ -519,7 +519,7 @@ export const DashboardPage = (): JSX.Element => {
           )}
 
           {/* Message for Brand to Add More Products */}
-          {!searchQuery && (
+          {!searchQuery && isActuallyBrand && (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <ShoppingBag className="h-8 w-8 text-gray-400" />
