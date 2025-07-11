@@ -82,20 +82,21 @@ export const ProfilePage = (): JSX.Element => {
     switch (activeTab) {
       case "Products":
         return (
-          <div className="space-y-8">
-            <div className="flex items-center justify-between">
-              <h3 className="text-2xl font-semibold text-gray-900">Recent Designs</h3>
+          <div className="space-y-6 sm:space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Recent Designs</h3>
               <Button
                 onClick={() => setShowAddProduct(true)}
-                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl px-4 sm:px-6 py-2 sm:py-3 shadow-lg hover:shadow-xl transition-all duration-300 text-sm sm:text-base"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Product
               </Button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Mobile: 2 columns, Tablet: 2 columns, Desktop: 3 columns */}
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
               {brandProducts.map((product) => (
-                <Card key={product.id} className="border-0 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
+                <Card key={product.id} className="border-0 rounded-xl sm:rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
                   <CardContent className="p-0">
                     <div className="aspect-[4/5] bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
                       <img
@@ -104,14 +105,14 @@ export const ProfilePage = (): JSX.Element => {
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="p-5">
-                      <h4 className="font-semibold text-gray-900 mb-3">{product.name}</h4>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <span className="text-lg font-bold text-gray-900">₹{product.price}</span>
-                          <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                    <div className="p-3 sm:p-4 lg:p-5">
+                      <h4 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base line-clamp-2">{product.name}</h4>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div className="flex items-center gap-1 sm:gap-2">
+                          <span className="text-sm sm:text-lg font-bold text-gray-900">₹{product.price}</span>
+                          <span className="text-xs sm:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
                         </div>
-                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 rounded-full px-3 py-1">
+                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 rounded-full px-2 sm:px-3 py-1 text-xs w-fit">
                           {product.sales} sold
                         </Badge>
                       </div>
@@ -125,14 +126,14 @@ export const ProfilePage = (): JSX.Element => {
 
       case "Orders":
         return (
-          <div className="space-y-8">
-            <h3 className="text-2xl font-semibold text-gray-900">My Orders</h3>
-            <div className="space-y-4">
+          <div className="space-y-6 sm:space-y-8">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">My Orders</h3>
+            <div className="space-y-3 sm:space-y-4">
               {userOrders.map((order) => (
-                <Card key={order.id} className="border-0 rounded-2xl overflow-hidden bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden flex-shrink-0">
+                <Card key={order.id} className="border-0 rounded-xl sm:rounded-2xl overflow-hidden bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl overflow-hidden flex-shrink-0">
                         <img
                           src={order.image}
                           alt={order.productName}
@@ -140,16 +141,16 @@ export const ProfilePage = (): JSX.Element => {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h4 className="font-semibold text-gray-900 truncate">{order.productName}</h4>
-                            <p className="text-sm text-gray-600">by {order.brand}</p>
-                            <p className="text-sm text-gray-500">Order #{order.id} • {order.date}</p>
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
+                          <div className="min-w-0">
+                            <h4 className="font-semibold text-gray-900 truncate text-sm sm:text-base">{order.productName}</h4>
+                            <p className="text-xs sm:text-sm text-gray-600">by {order.brand}</p>
+                            <p className="text-xs text-gray-500">Order #{order.id} • {order.date}</p>
                           </div>
-                          <div className="text-right flex-shrink-0">
-                            <p className="font-bold text-gray-900">₹{order.price}</p>
+                          <div className="flex items-center justify-between sm:flex-col sm:items-end sm:text-right flex-shrink-0 gap-2">
+                            <p className="font-bold text-gray-900 text-sm sm:text-base">₹{order.price}</p>
                             <Badge 
-                              className={`text-xs rounded-full px-3 py-1 ${
+                              className={`text-xs rounded-full px-2 sm:px-3 py-1 ${
                                 order.status === 'Delivered' 
                                   ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-100' 
                                   : 'bg-blue-100 text-blue-700 hover:bg-blue-100'
@@ -165,12 +166,12 @@ export const ProfilePage = (): JSX.Element => {
                 </Card>
               ))}
               {userOrders.length === 0 && (
-                <div className="text-center py-16">
-                  <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <Package className="w-10 h-10 text-gray-400" />
+                <div className="text-center py-12 sm:py-16">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                    <Package className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No orders yet</h3>
-                  <p className="text-gray-600">Start shopping to see your orders here!</p>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No orders yet</h3>
+                  <p className="text-gray-600 text-sm sm:text-base">Start shopping to see your orders here!</p>
                 </div>
               )}
             </div>
@@ -179,25 +180,25 @@ export const ProfilePage = (): JSX.Element => {
 
       case "Analytics":
         return (
-          <div className="space-y-8">
-            <h3 className="text-2xl font-semibold text-gray-900">Analytics</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <Card className="border-0 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6 text-center">
-                  <p className="text-3xl font-bold text-blue-700 mb-2">105</p>
-                  <p className="text-sm text-blue-600 font-medium">Total Sales</p>
+          <div className="space-y-6 sm:space-y-8">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Analytics</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <Card className="border-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <p className="text-2xl sm:text-3xl font-bold text-blue-700 mb-1 sm:mb-2">105</p>
+                  <p className="text-xs sm:text-sm text-blue-600 font-medium">Total Sales</p>
                 </CardContent>
               </Card>
-              <Card className="border-0 rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6 text-center">
-                  <p className="text-3xl font-bold text-emerald-700 mb-2">₹73,500</p>
-                  <p className="text-sm text-emerald-600 font-medium">Revenue</p>
+              <Card className="border-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-emerald-50 to-emerald-100 hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <p className="text-2xl sm:text-3xl font-bold text-emerald-700 mb-1 sm:mb-2">₹73,500</p>
+                  <p className="text-xs sm:text-sm text-emerald-600 font-medium">Revenue</p>
                 </CardContent>
               </Card>
-              <Card className="border-0 rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100 hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6 text-center">
-                  <p className="text-3xl font-bold text-amber-700 mb-2">4.8</p>
-                  <p className="text-sm text-amber-600 font-medium">Avg Rating</p>
+              <Card className="border-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100 hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <p className="text-2xl sm:text-3xl font-bold text-amber-700 mb-1 sm:mb-2">4.8</p>
+                  <p className="text-xs sm:text-sm text-amber-600 font-medium">Avg Rating</p>
                 </CardContent>
               </Card>
             </div>
@@ -206,45 +207,45 @@ export const ProfilePage = (): JSX.Element => {
 
       case "Wishlist":
         return (
-          <div className="space-y-8">
-            <h3 className="text-2xl font-semibold text-gray-900">My Wishlist</h3>
-            <div className="text-center py-16">
-              <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Heart className="w-10 h-10 text-pink-400" />
+          <div className="space-y-6 sm:space-y-8">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">My Wishlist</h3>
+            <div className="text-center py-12 sm:py-16">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-pink-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
-              <p className="text-gray-600">Save items you love to see them here!</p>
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Your wishlist is empty</h3>
+              <p className="text-gray-600 text-sm sm:text-base">Save items you love to see them here!</p>
             </div>
           </div>
         );
 
       case "Settings":
         return (
-          <div className="space-y-8">
-            <h3 className="text-2xl font-semibold text-gray-900">Settings</h3>
-            <div className="space-y-4">
-              <Card className="border-0 rounded-2xl bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
+          <div className="space-y-6 sm:space-y-8">
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-900">Settings</h3>
+            <div className="space-y-3 sm:space-y-4">
+              <Card className="border-0 rounded-xl sm:rounded-2xl bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Account Settings</h4>
-                      <p className="text-sm text-gray-600">Update your account information</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Account Settings</h4>
+                      <p className="text-xs sm:text-sm text-gray-600">Update your account information</p>
                     </div>
-                    <Button variant="outline" className="rounded-xl border-gray-200 hover:bg-gray-50">
+                    <Button variant="outline" className="rounded-lg sm:rounded-xl border-gray-200 hover:bg-gray-50 text-sm w-full sm:w-auto">
                       <Edit3 className="h-4 w-4 mr-2" />
                       Edit
                     </Button>
                   </div>
                 </CardContent>
               </Card>
-              <Card className="border-0 rounded-2xl bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
+              <Card className="border-0 rounded-xl sm:rounded-2xl bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Privacy Settings</h4>
-                      <p className="text-sm text-gray-600">Manage your privacy preferences</p>
+                      <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Privacy Settings</h4>
+                      <p className="text-xs sm:text-sm text-gray-600">Manage your privacy preferences</p>
                     </div>
-                    <Button variant="outline" className="rounded-xl border-gray-200 hover:bg-gray-50">
+                    <Button variant="outline" className="rounded-lg sm:rounded-xl border-gray-200 hover:bg-gray-50 text-sm w-full sm:w-auto">
                       <Settings className="h-4 w-4 mr-2" />
                       Manage
                     </Button>
@@ -262,19 +263,19 @@ export const ProfilePage = (): JSX.Element => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 px-4 py-3">
+      {/* Header - Mobile Optimized */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 px-3 sm:px-4 py-3">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="h-10 w-10 rounded-xl hover:bg-gray-100/80"
+            className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl hover:bg-gray-100/80"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
           
-          <h1 className="text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+          <h1 className="text-base sm:text-lg font-semibold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
             {isBrand ? 'Brand Profile' : 'Profile'}
           </h1>
           
@@ -282,96 +283,96 @@ export const ProfilePage = (): JSX.Element => {
             variant="ghost"
             size="icon"
             onClick={handleLogout}
-            className="h-10 w-10 rounded-xl hover:bg-red-50 text-red-600"
+            className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl hover:bg-red-50 text-red-600"
           >
-            <LogOut className="h-5 w-5" />
+            <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
           </Button>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        {/* Profile Header Card - Modern gradient design */}
-        <Card className="border-0 rounded-3xl overflow-hidden mb-8 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/50 backdrop-blur-sm shadow-xl">
-          <CardContent className="p-8">
-            <div className="flex flex-col lg:flex-row items-start gap-8">
+      {/* Main Content - Mobile Optimized */}
+      <main className="max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        {/* Profile Header Card - Mobile Responsive */}
+        <Card className="border-0 rounded-2xl sm:rounded-3xl overflow-hidden mb-6 sm:mb-8 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/50 backdrop-blur-sm shadow-xl">
+          <CardContent className="p-4 sm:p-6 lg:p-8">
+            <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-4 sm:gap-6 lg:gap-8">
               {/* Profile Image */}
-              <div className="flex flex-col items-center lg:items-start">
-                <div className="w-28 h-28 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mb-4 shadow-lg">
+              <div className="flex flex-col items-center">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl lg:text-3xl font-bold mb-3 sm:mb-4 shadow-lg">
                   {isBrand ? user.brandName?.charAt(0) || 'R' : user.username.charAt(0).toUpperCase()}
                 </div>
                 
                 {/* Verified Brand Badge */}
-                <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-full px-4 py-2 text-sm font-medium shadow-lg">
-                  <div className="w-2 h-2 bg-white rounded-full mr-2"></div>
+                <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:from-blue-600 hover:to-purple-600 rounded-full px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium shadow-lg">
+                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1 sm:mr-2"></div>
                   Verified Brand
                 </Badge>
               </div>
 
               {/* Profile Info */}
-              <div className="flex-1 text-center lg:text-left">
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+              <div className="flex-1">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4 sm:mb-6">
                   <div>
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-1 sm:mb-2">
                       {isBrand ? user.brandName : user.username}
                     </h1>
-                    <p className="text-gray-600 text-lg">@{user.username}</p>
+                    <p className="text-gray-600 text-base sm:text-lg">@{user.username}</p>
                   </div>
                   
-                  {/* Action Buttons */}
-                  <div className="flex flex-wrap gap-3 justify-center lg:justify-end">
+                  {/* Action Buttons - Mobile Stacked */}
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto">
                     {isBrand && (
                       <Button
                         variant="outline"
-                        className="rounded-xl border-gray-200 hover:bg-gray-50 px-6"
+                        className="rounded-lg sm:rounded-xl border-gray-200 hover:bg-gray-50 px-4 sm:px-6 text-xs sm:text-sm"
                       >
                         VIEW PUBLIC PROFILE
                       </Button>
                     )}
                     <Button
                       variant="outline"
-                      className="rounded-xl border-gray-200 hover:bg-gray-50 px-6"
+                      className="rounded-lg sm:rounded-xl border-gray-200 hover:bg-gray-50 px-4 sm:px-6 text-xs sm:text-sm"
                     >
-                      <Edit3 className="h-4 w-4 mr-2" />
+                      <Edit3 className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                       EDIT PROFILE
                     </Button>
                   </div>
                 </div>
 
-                {/* ROCKAGE Description */}
-                <div className="mb-6">
-                  <p className="text-gray-700 leading-relaxed text-lg">
+                {/* ROCKAGE Description - Mobile Optimized */}
+                <div className="mb-4 sm:mb-6">
+                  <p className="text-gray-700 leading-relaxed text-sm sm:text-base lg:text-lg">
                     Rockage: Where fashion meets fearless attitude! Celebrate individuality with our premium 100% cotton, 250gsm oversized anime tees. Bold designs like "HONOR BOUND" and "GENJUTSU" in sizes S-XXL. Wear your attitude. Rock your age!
                   </p>
                 </div>
 
-                {/* Stats */}
-                <div className="flex flex-wrap gap-6 text-sm text-gray-600 mb-6">
-                  <span className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                {/* Stats - Mobile Responsive */}
+                <div className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-6 text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6">
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-400 rounded-full"></div>
                     Joined 2024-01-15
                   </span>
                   <span>•</span>
-                  <span className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full"></div>
                     3 Products
                   </span>
                   <span>•</span>
-                  <span className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                  <span className="flex items-center gap-1 sm:gap-2">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full"></div>
                     3 Designs
                   </span>
                 </div>
 
-                {/* Collaborators */}
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-600 font-medium">Collaborators</span>
+                {/* Collaborators - Mobile Centered */}
+                <div className="flex items-center justify-center lg:justify-start gap-3">
+                  <span className="text-xs sm:text-sm text-gray-600 font-medium">Collaborators</span>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200"
+                    className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 hover:from-purple-200 hover:to-blue-200"
                   >
-                    <Plus className="h-4 w-4 text-purple-600" />
+                    <Plus className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600" />
                   </Button>
                 </div>
               </div>
@@ -379,33 +380,33 @@ export const ProfilePage = (): JSX.Element => {
           </CardContent>
         </Card>
 
-        {/* Action Buttons (Brand only) */}
+        {/* Action Buttons (Brand only) - Mobile Responsive */}
         {isBrand && (
-          <div className="flex flex-col sm:flex-row gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
             <Button
               onClick={() => setShowAddProduct(true)}
-              className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-2xl h-14 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-xl sm:rounded-2xl h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              <Plus className="w-5 h-5 mr-2" />
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               Add your Product
             </Button>
             <Button
               variant="outline"
-              className="flex-1 border-gray-200 rounded-2xl h-14 text-base font-semibold hover:bg-gray-50"
+              className="flex-1 border-gray-200 rounded-xl sm:rounded-2xl h-12 sm:h-14 text-sm sm:text-base font-semibold hover:bg-gray-50"
             >
               DASHBOARD
             </Button>
           </div>
         )}
 
-        {/* Navigation Tabs - Modern design */}
-        <div className="flex flex-wrap gap-2 mb-8 p-2 bg-white/60 backdrop-blur-sm rounded-2xl border border-gray-200/50">
+        {/* Navigation Tabs - Mobile Scrollable */}
+        <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 p-1 sm:p-2 bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl border border-gray-200/50 overflow-x-auto scrollbar-hide">
           {tabs.map((tab) => (
             <Button
               key={tab}
               onClick={() => setActiveTab(tab)}
               variant="ghost"
-              className={`rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 ${
+              className={`rounded-lg sm:rounded-xl px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap flex-shrink-0 ${
                 activeTab === tab 
                   ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg' 
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
@@ -416,8 +417,8 @@ export const ProfilePage = (): JSX.Element => {
           ))}
         </div>
 
-        {/* Tab Content */}
-        <div className="bg-white/40 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50">
+        {/* Tab Content - Mobile Optimized */}
+        <div className="bg-white/40 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-gray-200/50">
           {getTabContent()}
         </div>
       </main>
