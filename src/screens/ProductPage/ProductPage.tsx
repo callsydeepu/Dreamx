@@ -773,7 +773,6 @@ export const ProductPage = (): JSX.Element => {
               <div className="mb-4">
                 <Button
                   variant="outline"
-                  onClick={() => navigate(`/brand/${product.brandSlug}`)}
                   className="text-sm border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 rounded-full px-4 py-1 h-auto"
                 >
                   by {product.brand}
@@ -975,7 +974,6 @@ export const ProductPage = (): JSX.Element => {
               <div className="mb-4">
                 <Button
                   variant="outline"
-                  onClick={() => navigate(`/brand/${product.brandSlug}`)}
                   className="text-xs border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 rounded-full px-3 py-1 h-auto"
                 >
                   by {product.brand}

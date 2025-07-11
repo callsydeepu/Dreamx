@@ -315,11 +315,10 @@ export const ProfilePage = (): JSX.Element => {
                   <div className="flex flex-wrap gap-3 justify-center lg:justify-end">
                     {isBrand && (
                       <Button
-                        onClick={() => navigate(`/brand/${user.brandName}`)}
                         variant="outline"
                         className="rounded-[1px] border-gray-300"
                       >
-                        VISIT BRAND PAGE
+                        VIEW PUBLIC PROFILE
                       </Button>
                     )}
                     <Button
