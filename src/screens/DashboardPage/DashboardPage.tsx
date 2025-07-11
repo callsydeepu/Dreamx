@@ -62,6 +62,9 @@ export const DashboardPage = (): JSX.Element => {
     navigate('/cart');
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
 
   const totalCartItems = getTotalItems();
 
@@ -79,8 +82,18 @@ export const DashboardPage = (): JSX.Element => {
             />
           </div>
 
-          {/* Desktop Navigation - Only Cart */}
+          {/* Desktop Navigation - Only Profile and Cart */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8 flex-shrink-0">
+            {/* Profile Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleProfileClick}
+              className="h-12 w-12 rounded-[40px] hover:bg-gray-100"
+            >
+              <User className="h-6 w-6 text-gray-600" />
+            </Button>
+
             {/* Cart Icon with Count */}
             <div className="relative">
               <Button
@@ -100,8 +113,18 @@ export const DashboardPage = (): JSX.Element => {
             </div>
           </nav>
 
-          {/* Mobile Navigation - Cart only */}
+          {/* Mobile Navigation - Profile and Cart */}
           <div className="lg:hidden flex items-center gap-3">
+            {/* Profile Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleProfileClick}
+              className="h-12 w-12 rounded-[40px] hover:bg-gray-100"
+            >
+              <User className="h-6 w-6 text-gray-600" />
+            </Button>
+
             {/* Mobile Cart Icon */}
             <div className="relative">
               <Button
