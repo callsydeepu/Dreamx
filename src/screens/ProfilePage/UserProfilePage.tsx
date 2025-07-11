@@ -76,14 +76,14 @@ const EditUserProfileModal = ({ isOpen, onClose, user, onSave }) => {
               {/* Profile Image Section */}
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
-                  <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg overflow-hidden" style={{ borderRadius: '1px' }}>
+                  <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg overflow-hidden rounded-full">
                     {profileImage ? (
                       <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
                       user?.username?.charAt(0)?.toUpperCase() || 'U'
                     )}
                   </div>
-                  <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-white border-2 border-blue-300 flex items-center justify-center cursor-pointer hover:bg-blue-50 transition-colors shadow-lg" style={{ borderRadius: '1px' }}>
+                  <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-white border-2 border-blue-300 rounded-full flex items-center justify-center cursor-pointer hover:bg-blue-50 transition-colors shadow-lg">
                     <Camera className="h-4 w-4 text-gray-600" />
                     <input
                       type="file"
@@ -409,11 +409,11 @@ export const UserProfilePage = (): JSX.Element => {
             <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-6 lg:gap-8">
               {/* Profile Image */}
               <div className="flex flex-col items-center">
-                <div className="w-24 h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-gray-400 to-gray-500 flex items-center justify-center text-white text-2xl lg:text-3xl font-bold mb-4 shadow-lg" style={{ borderRadius: '1px' }}>
+                <div className="w-24 h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-gray-400 to-gray-500 flex items-center justify-center text-white text-2xl lg:text-3xl font-bold mb-4 shadow-lg rounded-full">
                   {profileData?.username?.charAt(0)?.toUpperCase() || 'U'}
                 </div>
                 
-                <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 px-4 py-2 text-sm font-medium" style={{ borderRadius: '1px' }}>
+                <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 px-4 py-2 text-sm font-medium" style={{ borderRadius: '12px' }}>
                   <User className="w-4 h-4 mr-2" />
                   Customer
                 </Badge>
