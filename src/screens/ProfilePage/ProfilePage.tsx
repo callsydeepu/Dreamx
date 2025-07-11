@@ -77,18 +77,18 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
       
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-yellow-50 to-amber-50 border border-yellow-200 shadow-2xl" style={{ borderRadius: '1px' }}>
+        <Card className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-2xl" style={{ borderRadius: '1px' }}>
           <CardContent className="p-0">
             {/* Header */}
-            <div className="sticky top-0 bg-gradient-to-r from-yellow-100 to-amber-100 border-b border-yellow-200 p-6 flex items-center justify-between" style={{ borderRadius: '1px 1px 0 0' }}>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-800 to-yellow-800 bg-clip-text text-transparent">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between" style={{ borderRadius: '1px 1px 0 0' }}>
+              <h2 className="text-2xl font-bold text-gray-900">
                 Edit Profile
               </h2>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="h-10 w-10 hover:bg-yellow-200/50"
+                className="h-10 w-10 hover:bg-gray-100"
                 style={{ borderRadius: '1px' }}
               >
                 <X className="h-5 w-5" />
@@ -108,7 +108,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                     )}
                   </div>
                   <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-white border-2 border-yellow-300 flex items-center justify-center cursor-pointer hover:bg-yellow-50 transition-colors shadow-lg" style={{ borderRadius: '1px' }}>
-                    <Camera className="h-4 w-4 text-amber-600" />
+                    <Camera className="h-4 w-4 text-gray-600" />
                     <input
                       type="file"
                       accept="image/*"
@@ -117,14 +117,14 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                     />
                   </label>
                 </div>
-                <p className="text-sm text-amber-700">Click the camera icon to change your profile picture</p>
+                <p className="text-sm text-gray-600">Click the camera icon to change your profile picture</p>
               </div>
 
               {/* Form Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Username */}
                 <div>
-                  <label className="block text-sm font-medium text-amber-800 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Username
                   </label>
                   <input
@@ -132,7 +132,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                     name="username"
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="w-full h-12 px-4 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
+                    className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     style={{ borderRadius: '1px' }}
                     placeholder="Enter username"
                   />
@@ -140,7 +140,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-medium text-amber-800 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Email
                   </label>
                   <input
@@ -148,7 +148,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full h-12 px-4 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
+                    className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     style={{ borderRadius: '1px' }}
                     placeholder="Enter email"
                   />
@@ -157,7 +157,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                 {/* Brand Name (if brand) */}
                 {isBrand && (
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-amber-800 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Brand Name
                     </label>
                     <input
@@ -165,7 +165,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                       name="brandName"
                       value={formData.brandName}
                       onChange={handleInputChange}
-                      className="w-full h-12 px-4 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
+                      className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                       style={{ borderRadius: '1px' }}
                       placeholder="Enter brand name"
                     />
@@ -174,7 +174,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
                 {/* Location */}
                 <div>
-                  <label className="block text-sm font-medium text-amber-800 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Location
                   </label>
                   <input
@@ -182,7 +182,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                     name="location"
                     value={formData.location}
                     onChange={handleInputChange}
-                    className="w-full h-12 px-4 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
+                    className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     style={{ borderRadius: '1px' }}
                     placeholder="Enter location"
                   />
@@ -190,7 +190,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
                 {/* Website */}
                 <div>
-                  <label className="block text-sm font-medium text-amber-800 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Website
                   </label>
                   <input
@@ -198,7 +198,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                     name="website"
                     value={formData.website}
                     onChange={handleInputChange}
-                    className="w-full h-12 px-4 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all"
+                    className="w-full h-12 px-4 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     style={{ borderRadius: '1px' }}
                     placeholder="https://yourwebsite.com"
                   />
@@ -207,7 +207,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
               {/* Bio/Description */}
               <div>
-                <label className="block text-sm font-medium text-amber-800 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {isBrand ? 'Brand Description' : 'Bio'}
                 </label>
                 <textarea
@@ -215,16 +215,16 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                   value={formData.bio}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
                   style={{ borderRadius: '1px' }}
                   placeholder={isBrand ? "Describe your brand..." : "Tell us about yourself..."}
                 />
-                <p className="text-xs text-amber-600 mt-1">{formData.bio.length}/500 characters</p>
+                <p className="text-xs text-gray-500 mt-1">{formData.bio.length}/500 characters</p>
               </div>
 
               {/* Social Links */}
               <div>
-                <label className="block text-sm font-medium text-amber-800 mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-4">
                   Social Links
                 </label>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -233,14 +233,14 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                       <div className="w-5 h-5 bg-gradient-to-r from-pink-500 to-purple-500 flex items-center justify-center" style={{ borderRadius: '1px' }}>
                         <span className="text-white text-xs font-bold">IG</span>
                       </div>
-                      <span className="text-sm text-amber-700">Instagram</span>
+                      <span className="text-sm text-gray-700">Instagram</span>
                     </div>
                     <input
                       type="text"
                       name="social_instagram"
                       value={formData.socialLinks.instagram}
                       onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all text-sm"
+                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                       style={{ borderRadius: '1px' }}
                       placeholder="@username"
                     />
@@ -251,14 +251,14 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                       <div className="w-5 h-5 bg-blue-500 flex items-center justify-center" style={{ borderRadius: '1px' }}>
                         <span className="text-white text-xs font-bold">T</span>
                       </div>
-                      <span className="text-sm text-amber-700">Twitter</span>
+                      <span className="text-sm text-gray-700">Twitter</span>
                     </div>
                     <input
                       type="text"
                       name="social_twitter"
                       value={formData.socialLinks.twitter}
                       onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all text-sm"
+                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                       style={{ borderRadius: '1px' }}
                       placeholder="@username"
                     />
@@ -269,14 +269,14 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
                       <div className="w-5 h-5 bg-blue-700 flex items-center justify-center" style={{ borderRadius: '1px' }}>
                         <span className="text-white text-xs font-bold">in</span>
                       </div>
-                      <span className="text-sm text-amber-700">LinkedIn</span>
+                      <span className="text-sm text-gray-700">LinkedIn</span>
                     </div>
                     <input
                       type="text"
                       name="social_linkedin"
                       value={formData.socialLinks.linkedin}
                       onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all text-sm"
+                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                       style={{ borderRadius: '1px' }}
                       placeholder="linkedin.com/in/username"
                     />
@@ -284,15 +284,15 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
 
                   <div>
                     <div className="flex items-center gap-2 mb-2">
-                      <Globe className="w-5 h-5 text-amber-600" />
-                      <span className="text-sm text-amber-700">Website</span>
+                      <Globe className="w-5 h-5 text-gray-600" />
+                      <span className="text-sm text-gray-700">Website</span>
                     </div>
                     <input
                       type="url"
                       name="social_website"
                       value={formData.socialLinks.website}
                       onChange={handleInputChange}
-                      className="w-full h-10 px-3 border border-yellow-300 bg-yellow-50/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all text-sm"
+                      className="w-full h-10 px-3 border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-sm"
                       style={{ borderRadius: '1px' }}
                       placeholder="https://yoursite.com"
                     />
@@ -302,11 +302,11 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
             </div>
 
             {/* Footer */}
-            <div className="sticky bottom-0 bg-gradient-to-r from-yellow-100 to-amber-100 border-t border-yellow-200 p-6 flex gap-3" style={{ borderRadius: '0 0 1px 1px' }}>
+            <div className="sticky bottom-0 bg-white border-t border-gray-200 p-6 flex gap-3" style={{ borderRadius: '0 0 1px 1px' }}>
               <Button
                 variant="outline"
                 onClick={onClose}
-                className="flex-1 h-12 border-yellow-300 hover:bg-yellow-200/50"
+                className="flex-1 h-12 border-gray-300 hover:bg-gray-50"
                 style={{ borderRadius: '1px' }}
                 disabled={isLoading}
               >
@@ -315,7 +315,7 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
               <Button
                 onClick={handleSave}
                 disabled={isLoading}
-                className="flex-1 h-12 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white shadow-lg"
+                className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
                 style={{ borderRadius: '1px' }}
               >
                 {isLoading ? (
