@@ -518,26 +518,6 @@ export const DashboardPage = (): JSX.Element => {
             </div>
           )}
 
-          {/* Message for Brand to Add More Products */}
-          {!searchQuery && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShoppingBag className="h-8 w-8 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Ready to Add More Products?
-              </h3>
-              <p className="text-sm text-gray-500 max-w-sm mx-auto mb-4">
-                This is your featured product. Brands can add more amazing products to showcase their collection.
-              </p>
-              <Button 
-                onClick={() => navigate('/profile')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full"
-              >
-                Go to Profile to Add Products
-              </Button>
-            </div>
-          )}
         </div>
       </main>
     </div>
