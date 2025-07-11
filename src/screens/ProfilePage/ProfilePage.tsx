@@ -506,6 +506,7 @@ export const ProfilePage = (): JSX.Element => {
                 </div>
                 
                 <Badge className="bg-blue-600 text-white hover:bg-blue-600 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium shadow-lg rounded-md">
+                <Badge className="bg-blue-600 text-white hover:bg-blue-600 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium shadow-lg" style={{ borderRadius: '16px' }}>
                   <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white mr-1 sm:mr-2 rounded-sm"></div>
                   Verified Brand
                 </Badge>
