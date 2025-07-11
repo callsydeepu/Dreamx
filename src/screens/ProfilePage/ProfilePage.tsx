@@ -100,14 +100,14 @@ const EditProfileModal = ({ isOpen, onClose, user, isBrand, onSave }) => {
               {/* Profile Image Section */}
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
-                  <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg overflow-hidden" style={{ borderRadius: '1px' }}>
+                  <div className="w-24 h-24 bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg overflow-hidden rounded-full">
                     {profileImage ? (
                       <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
                     ) : (
                       (isBrand ? user?.brandName?.charAt(0) || 'R' : user?.username?.charAt(0)?.toUpperCase())
                     )}
                   </div>
-                  <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-white border-2 border-yellow-300 flex items-center justify-center cursor-pointer hover:bg-yellow-50 transition-colors shadow-lg" style={{ borderRadius: '1px' }}>
+                  <label className="absolute -bottom-2 -right-2 w-8 h-8 bg-white border-2 border-yellow-300 rounded-full flex items-center justify-center cursor-pointer hover:bg-yellow-50 transition-colors shadow-lg">
                     <Camera className="h-4 w-4 text-gray-600" />
                     <input
                       type="file"
