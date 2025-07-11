@@ -16,7 +16,7 @@ const EditUserProfileModal = ({ isOpen, onClose, user, onSave }) => {
     lastName: '',
     phone: '',
     location: '',
-    bio: "Fashion enthusiast and style curator. Love discovering new brands and unique designs.",
+    bio: '',
     dateOfBirth: '',
     gender: '',
     socialLinks: {
@@ -392,7 +392,22 @@ export const UserProfilePage = (): JSX.Element => {
   const { getOrderHistory } = useCart();
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [activeTab, setActiveTab] = useState("Profile");
-  const [profileData, setProfileData] = useState(user);
+  const [profileData, setProfileData] = useState({
+    ...user,
+    firstName: '',
+    lastName: '',
+    phone: '',
+    location: '',
+    bio: '',
+    dateOfBirth: '',
+    gender: '',
+    socialLinks: {
+      instagram: '',
+      twitter: '',
+      linkedin: '',
+      website: ''
+    }
+  });
 
   if (!user) {
     navigate('/auth');
@@ -409,48 +424,8 @@ export const UserProfilePage = (): JSX.Element => {
     console.log('User profile updated:', updatedData);
   };
 
-  // Mock orders data - in real app, this would come from API or cart context
-  const userOrders = [
-    {
-      id: "ORD001",
-      productName: "Oversized t shirt",
-      brand: "ROCKAGE",
-      price: 699,
-      status: "Delivered",
-      date: "2024-01-15",
-      image: "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
-      orderDate: "January 15, 2024",
-      deliveryDate: "January 20, 2024",
-      size: "L",
-      quantity: 1
-    },
-    {
-      id: "ORD002", 
-      productName: "Honor Bound Tee",
-      brand: "ROCKAGE",
-      price: 799,
-      status: "Shipped",
-      date: "2024-01-20",
-      image: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      orderDate: "January 20, 2024",
-      deliveryDate: "Expected: January 25, 2024",
-      size: "M",
-      quantity: 1
-    },
-    {
-      id: "ORD003",
-      productName: "Genjutsu Design",
-      brand: "ROCKAGE", 
-      price: 899,
-      status: "Processing",
-      date: "2024-01-22",
-      image: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      orderDate: "January 22, 2024",
-      deliveryDate: "Expected: January 28, 2024",
-      size: "XL",
-      quantity: 2
-    }
-  ];
+  // Mock orders data - empty for new users
+  const userOrders = [];
 
   const tabs = ["Profile", "My Orders", "Settings"];
 
@@ -482,15 +457,23 @@ export const UserProfilePage = (): JSX.Element => {
                 style={{ borderRadius: '1px' }}
               >
                 <Edit3 className="h-4 w-4 mr-2" />
-                Edit Profile
+                Complete Profile
               </Button>
             </div>
             
-            {/* Profile Information Cards */}
+            {/* Profile Information Cards - Empty State */}
             <div className="space-y-4">
               <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
                 <CardContent className="p-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">First Name</h4>
+                      <p className="text-gray-400 italic">{profileData?.firstName || 'Not set - Click edit to add'}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Last Name</h4>
+                      <p className="text-gray-400 italic">{profileData?.lastName || 'Not set - Click edit to add'}</p>
+                    </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Username</h4>
                       <p className="text-gray-600">{profileData?.username || 'Not set'}</p>
@@ -503,14 +486,20 @@ export const UserProfilePage = (): JSX.Element => {
                       <p className="text-gray-600">{profileData?.email || 'Not set'}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Member Since</h4>
-                      <p className="text-gray-600">{profileData?.joinedDate || '2024-01-15'}</p>
+                      <h4 className="font-semibold text-gray-900 mb-1">Phone</h4>
+                      <p className="text-gray-400 italic">{profileData?.phone || 'Not set - Click edit to add'}</p>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Account Type</h4>
-                      <Badge className="bg-green-100 text-green-700 hover:bg-green-100" style={{ borderRadius: '1px' }}>
-                        Customer
-                      </Badge>
+                      <h4 className="font-semibold text-gray-900 mb-1">Location</h4>
+                      <p className="text-gray-400 italic">{profileData?.location || 'Not set - Click edit to add'}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Date of Birth</h4>
+                      <p className="text-gray-400 italic">{profileData?.dateOfBirth || 'Not set - Click edit to add'}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Gender</h4>
+                      <p className="text-gray-400 italic">{profileData?.gender || 'Not set - Click edit to add'}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -519,15 +508,39 @@ export const UserProfilePage = (): JSX.Element => {
               <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
                 <CardContent className="p-6">
                   <h4 className="font-semibold text-gray-900 mb-3">Bio</h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    Fashion enthusiast and style curator. Love discovering new brands and unique designs.
+                  <p className="text-gray-400 italic">
+                    {profileData?.bio || 'No bio added yet - Click edit to add your bio and tell others about yourself!'}
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
                 <CardContent className="p-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Statistics</h4>
+                  <h4 className="font-semibold text-gray-900 mb-3">Social Links</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-1">Instagram</p>
+                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.instagram || 'Not set'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-1">Twitter</p>
+                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.twitter || 'Not set'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-1">LinkedIn</p>
+                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.linkedin || 'Not set'}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-1">Website</p>
+                      <p className="text-gray-400 italic text-sm">{profileData?.socialLinks?.website || 'Not set'}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border border-gray-200 bg-white" style={{ borderRadius: '1px' }}>
+                <CardContent className="p-6">
+                  <h4 className="font-semibold text-gray-900 mb-3">Account Information</h4>
                   <div className="grid grid-cols-3 gap-4 text-center">
                     <div>
                       <p className="text-2xl font-bold text-blue-600">{userOrders.length}</p>
@@ -538,8 +551,20 @@ export const UserProfilePage = (): JSX.Element => {
                       <p className="text-sm text-gray-600">Wishlist Items</p>
                     </div>
                     <div>
-                      <p className="text-2xl font-bold text-purple-600">₹{userOrders.reduce((sum, order) => sum + order.price, 0)}</p>
+                      <p className="text-2xl font-bold text-purple-600">₹0</p>
                       <p className="text-sm text-gray-600">Total Spent</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Member Since</span>
+                      <span className="text-sm font-medium text-gray-900">{profileData?.joinedDate || new Date().toISOString().split('T')[0]}</span>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className="text-sm text-gray-600">Account Type</span>
+                      <Badge className="bg-green-100 text-green-700 hover:bg-green-100" style={{ borderRadius: '1px' }}>
+                        Customer
+                      </Badge>
                     </div>
                   </div>
                 </CardContent>
@@ -561,104 +586,20 @@ export const UserProfilePage = (): JSX.Element => {
               </div>
             </div>
             
-            <div className="space-y-4">
-              {userOrders.map((order) => (
-                <Card key={order.id} className="border border-gray-200 overflow-hidden bg-white hover:shadow-lg transition-all duration-300" style={{ borderRadius: '1px' }}>
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      {/* Product Image */}
-                      <div className="w-full h-48 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 bg-gray-50 overflow-hidden flex-shrink-0" style={{ borderRadius: '1px' }}>
-                        <img
-                          src={order.image}
-                          alt={order.productName}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      
-                      {/* Order Details */}
-                      <div className="flex-1 min-w-0">
-                        <div className="space-y-3 sm:space-y-4">
-                          {/* Product Info */}
-                          <div>
-                            <h4 className="font-semibold text-gray-900 text-base sm:text-lg mb-1">{order.productName}</h4>
-                            <p className="text-sm text-gray-600 mb-1">by {order.brand}</p>
-                            <p className="text-xs text-gray-500">Order #{order.id}</p>
-                            <div className="flex items-center gap-3 sm:gap-4 mt-2 text-xs text-gray-500">
-                              <span>Size: {order.size}</span>
-                              <span>Qty: {order.quantity}</span>
-                            </div>
-                          </div>
-                          
-                          {/* Order Dates and Price/Status Row */}
-                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-                            {/* Order Dates */}
-                            <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-col sm:gap-1">
-                              <div>
-                                <p className="text-xs text-gray-500">Order Date</p>
-                                <p className="text-sm font-medium text-gray-900">{order.orderDate}</p>
-                              </div>
-                              <div>
-                                <p className="text-xs text-gray-500">Delivery</p>
-                                <p className="text-sm text-gray-700">{order.deliveryDate}</p>
-                              </div>
-                            </div>
-                            
-                            {/* Price and Status */}
-                            <div className="flex flex-col sm:items-end gap-2">
-                              <div className="flex items-center justify-between sm:flex-col sm:items-end sm:gap-1">
-                                <p className="font-bold text-gray-900 text-lg">₹{order.price}</p>
-                                <Badge 
-                                  className={`text-xs px-3 py-1 ${getStatusColor(order.status)}`}
-                                  style={{ borderRadius: '1px' }}
-                                >
-                                  {order.status}
-                                </Badge>
-                              </div>
-                              <div className="flex gap-2 mt-2">
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="text-xs px-3 py-1 h-8"
-                                  style={{ borderRadius: '1px' }}
-                                >
-                                  Track Order
-                                </Button>
-                                {order.status === 'Delivered' && (
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="text-xs px-3 py-1 h-8"
-                                    style={{ borderRadius: '1px' }}
-                                  >
-                                    Review
-                                  </Button>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              
-              {userOrders.length === 0 && (
-                <div className="text-center py-16">
-                  <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6" style={{ borderRadius: '1px' }}>
-                    <Package className="w-10 h-10 text-gray-500" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No orders yet</h3>
-                  <p className="text-gray-600 mb-6">Start shopping to see your orders here!</p>
-                  <Button
-                    onClick={() => navigate('/dashboard')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
-                    style={{ borderRadius: '1px' }}
-                  >
-                    Start Shopping
-                  </Button>
-                </div>
-              )}
+            {/* Empty Orders State */}
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-gray-100 flex items-center justify-center mx-auto mb-6" style={{ borderRadius: '1px' }}>
+                <Package className="w-10 h-10 text-gray-500" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No orders yet</h3>
+              <p className="text-gray-600 mb-6">Start shopping to see your orders here!</p>
+              <Button
+                onClick={() => navigate('/dashboard')}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
+                style={{ borderRadius: '1px' }}
+              >
+                Start Shopping
+              </Button>
             </div>
           </div>
         );
@@ -757,13 +698,13 @@ export const UserProfilePage = (): JSX.Element => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Profile Header Card */}
+        {/* Profile Header Card - Empty State */}
         <Card className="border border-gray-200 overflow-hidden mb-8 bg-white shadow-lg" style={{ borderRadius: '1px' }}>
           <CardContent className="p-6 lg:p-8">
             <div className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-6 lg:gap-8">
-              {/* Profile Image */}
+              {/* Profile Image - Empty State */}
               <div className="flex flex-col items-center">
-                <div className="w-24 h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl lg:text-3xl font-bold mb-4 shadow-lg" style={{ borderRadius: '1px' }}>
+                <div className="w-24 h-24 lg:w-28 lg:h-28 bg-gradient-to-br from-gray-400 to-gray-500 flex items-center justify-center text-white text-2xl lg:text-3xl font-bold mb-4 shadow-lg" style={{ borderRadius: '1px' }}>
                   {profileData?.username?.charAt(0)?.toUpperCase() || 'U'}
                 </div>
                 
@@ -773,7 +714,7 @@ export const UserProfilePage = (): JSX.Element => {
                 </Badge>
               </div>
 
-              {/* Profile Info */}
+              {/* Profile Info - Empty State */}
               <div className="flex-1">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
                   <div>
@@ -781,31 +722,31 @@ export const UserProfilePage = (): JSX.Element => {
                       {profileData?.username || 'User'}
                     </h1>
                     <p className="text-gray-600 text-lg">{profileData?.email}</p>
+                    <p className="text-gray-400 text-sm mt-2 italic">Profile incomplete - Click edit to complete your profile</p>
                   </div>
                   
                   <Button
                     onClick={() => setShowEditProfile(true)}
-                    variant="outline"
-                    className="border-gray-300 hover:bg-gray-50 px-6"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6"
                     style={{ borderRadius: '1px' }}
                   >
                     <Edit3 className="h-4 w-4 mr-2" />
-                    Edit Profile
+                    Complete Profile
                   </Button>
                 </div>
 
-                {/* User Bio */}
+                {/* Empty Bio */}
                 <div className="mb-6">
-                  <p className="text-gray-700 leading-relaxed">
-                    Fashion enthusiast and style curator. Love discovering new brands and unique designs.
+                  <p className="text-gray-400 leading-relaxed italic">
+                    No bio added yet. Click "Complete Profile" to add your bio and tell others about yourself!
                   </p>
                 </div>
 
-                {/* Stats */}
+                {/* Stats - Empty State */}
                 <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-gray-600 mb-6">
                   <span className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    Joined {profileData?.joinedDate || '2024-01-15'}
+                    Joined {profileData?.joinedDate || new Date().toISOString().split('T')[0]}
                   </span>
                   <span className="flex items-center gap-2">
                     <Package className="w-4 h-4" />
