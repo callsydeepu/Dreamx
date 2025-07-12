@@ -12,6 +12,7 @@ import { ProfilePage, UserProfilePage } from "./screens/ProfilePage";
 import { CheckoutPage } from "./screens/CheckoutPage";
 import { OrderSuccessPage } from "./screens/OrderSuccessPage";
 import { AdminPage } from "./screens/AdminPage";
+import { BrandPage } from "./screens/BrandPage";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order-success" element={<OrderSuccessPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/adminpage" element={<AdminPage />} />
+            <Route path="/brand/:brandSlug" element={<BrandPage />} />
+            <Route path="/adminpage" element={<AdminPage />} />
+            <Route path="/brand/:brandSlug" element={<BrandPage />} />
             {/* Fallback route for any unmatched paths */}
             <Route path="*" element={<LandingPage />} />
           </Routes>

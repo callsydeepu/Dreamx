@@ -64,7 +64,8 @@ export const DashboardPage = (): JSX.Element => {
     {
       id: 1,
       name: "Oversized t shirt",
-      brand: "ROCKAGE",
+      brand: "ROCKAGE", 
+      brandSlug: "rockage",
       originalPrice: 1399,
       salePrice: 699,
       discount: 50,
@@ -72,7 +73,9 @@ export const DashboardPage = (): JSX.Element => {
       category: "T-Shirts",
       isNew: true,
       slug: "oversized-t-shirt",
-      isOnSale: true
+      isOnSale: true,
+      rating: 4.5,
+      reviews: 128
     }
   ];
 
@@ -97,6 +100,10 @@ export const DashboardPage = (): JSX.Element => {
 
   const handleProductClick = (product: typeof demoProducts[0]) => {
     navigate(`/product/${product.slug}`);
+  };
+
+  const handleBrandClick = (brandSlug: string) => {
+    navigate(`/brand/${brandSlug}`);
   };
 
   const handleCartClick = () => {
@@ -422,13 +429,13 @@ export const DashboardPage = (): JSX.Element => {
                             <Star
                               key={i}
                               className={`w-3 h-3 ${
-                                i < Math.floor(product.rating)
+                                i < Math.floor(product.rating || 0)
                                   ? 'fill-yellow-400 text-yellow-400'
                                   : 'text-gray-300'
                               }`}
                             />
                           ))}
-                          <span className="text-xs text-gray-600 ml-1">({product.reviews})</span>
+                          <span className="text-xs text-gray-600 ml-1">({product.reviews || 0})</span>
                         </div>
 
                         {/* Heart Icon */}
@@ -448,7 +455,15 @@ export const DashboardPage = (): JSX.Element => {
                           <h4 className="text-base font-medium text-gray-900 mb-1 line-clamp-2">
                             {product.name}
                           </h4>
-                          <p className="text-sm text-gray-500 mb-2">{product.brand}</p>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleBrandClick(product.brandSlug);
+                            }}
+                            className="text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 text-left"
+                          >
+                            by {product.brand}
+                          </button>
                           
                           <div className="flex items-center gap-2 mb-3">
                             <span className="text-lg font-bold text-gray-900">₹{product.salePrice}</span>
@@ -465,23 +480,6 @@ export const DashboardPage = (): JSX.Element => {
                     </CardContent>
                   </Card>
                 ))}
-              </div>
-
-              {/* View More Section */}
-              <div className="text-center mt-8">
-                <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <ShoppingBag className="h-8 w-8 text-gray-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Ready to Add More Products?</h3>
-                <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                  This is your featured product. Brands can add more amazing products to showcase their collection.
-                </p>
-                <Button 
-                  onClick={handleProfileClick}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
-                >
-                  View More
-                </Button>
               </div>
             </div>
           )}

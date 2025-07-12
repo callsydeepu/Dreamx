@@ -116,7 +116,9 @@ export const AdminPage = (): JSX.Element => {
       status: "Pending",
       orderDate: "2025-01-23",
       shippingAddress: "321 User Lane, Bangalore, 560002"
-    }
+    },
+    // Add orders from cart context
+    ...getAllOrders()
   ];
 
   const tabs = ["Dashboard", "Brand Accounts", "Orders", "Analytics"];

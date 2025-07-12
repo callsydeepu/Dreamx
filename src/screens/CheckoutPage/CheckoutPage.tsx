@@ -91,6 +91,24 @@ export const CheckoutPage = (): JSX.Element => {
     // Simulate order processing
     await new Promise(resolve => setTimeout(resolve, 2000));
     
+    // Create order data for admin tracking
+    const orderData = {
+      id: `ORD${Date.now()}`,
+      customerName: `${shippingData.firstName} ${shippingData.lastName}`,
+      customerEmail: user?.email || 'guest@example.com',
+      brandName: checkoutItems[0]?.brand || 'Unknown Brand',
+      productName: checkoutItems.map(item => item.name).join(', '),
+      quantity: checkoutItems.reduce((total, item) => total + item.quantity, 0),
+      totalAmount: totalAmount,
+      status: 'Processing',
+      orderDate: new Date().toISOString().split('T')[0],
+      shippingAddress: `${shippingData.address}, ${shippingData.city}, ${shippingData.state} ${shippingData.postalCode}`,
+      items: checkoutItems
+    };
+    
+    // Add order to admin system (in real app, this would be an API call)
+    console.log('Order placed:', orderData);
+    
     // Add items to order history
     addToOrderHistory(checkoutItems);
     
@@ -111,7 +129,8 @@ export const CheckoutPage = (): JSX.Element => {
           shipping: shippingData,
           payment: paymentData,
           orderId: `ORD${Date.now()}`,
-          fromCart: !directBuyItem // Track if order came from cart
+          fromCart: !directBuyItem, // Track if order came from cart
+          adminOrderData: orderData // Include admin order data
         }
       }
     });
