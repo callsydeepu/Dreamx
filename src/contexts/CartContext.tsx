@@ -22,6 +22,21 @@ interface CartContextType {
   getOrderHistory: () => CartItem[];
   addToOrderHistory: (items: CartItem[]) => void;
   clearOrderHistory: () => void;
+  getAllOrders: () => Order[];
+}
+
+export interface Order {
+  id: string;
+  customerName: string;
+  customerEmail: string;
+  brandName: string;
+  productName: string;
+  quantity: number;
+  totalAmount: number;
+  status: string;
+  orderDate: string;
+  shippingAddress: string;
+  items: CartItem[];
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -37,6 +52,56 @@ export const useCart = () => {
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [orderHistory, setOrderHistory] = useState<CartItem[]>([]);
+  const [allOrders, setAllOrders] = useState<Order[]>([
+    {
+      id: "ORD001",
+      customerName: "John Doe",
+      customerEmail: "john@example.com",
+      brandName: "ROCKAGE",
+      productName: "Oversized T-shirt",
+      quantity: 2,
+      totalAmount: 1398,
+      status: "Delivered",
+      orderDate: "2025-01-15",
+      shippingAddress: "123 Customer Street, Mumbai, 400002",
+      items: [
+        {
+          id: "1",
+          name: "Oversized T-shirt",
+          price: 699,
+          size: "M",
+          quantity: 2,
+          image: "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
+          slug: "oversized-t-shirt",
+          brand: "ROCKAGE"
+        }
+      ]
+    },
+    {
+      id: "ORD002",
+      customerName: "Jane Smith",
+      customerEmail: "jane@example.com",
+      brandName: "StyleCraft",
+      productName: "Designer Hoodie",
+      quantity: 1,
+      totalAmount: 2499,
+      status: "Shipped",
+      orderDate: "2025-01-20",
+      shippingAddress: "456 Buyer Avenue, Delhi, 110003",
+      items: [
+        {
+          id: "2",
+          name: "Designer Hoodie",
+          price: 2499,
+          size: "L",
+          quantity: 1,
+          image: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+          slug: "designer-hoodie",
+          brand: "StyleCraft"
+        }
+      ]
+    }
+  ]);
 
   const addToCart = (item: Omit<CartItem, 'id'>) => {
     const id = `${item.name}-${item.size}-${Date.now()}`;
@@ -89,6 +154,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const clearOrderHistory = () => {
     setOrderHistory([]);
   };
+
+  const getAllOrders = () => {
+    return allOrders;
+  };
   
   return (
     <CartContext.Provider
@@ -103,6 +172,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         getOrderHistory,
         addToOrderHistory,
         clearOrderHistory,
+        getAllOrders,
       }}
     >
       {children}
