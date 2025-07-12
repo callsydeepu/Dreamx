@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { X, Building, Mail, Lock, MapPin, Phone, Home, Globe } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import { useBrand } from "../contexts/BrandContext";
 
 interface AddBrandModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export const AddBrandModal: React.FC<AddBrandModalProps> = ({
   isOpen,
   onClose
 }) => {
+  const { addBrand } = useBrand();
   const [formData, setFormData] = useState({
     brandName: "",
     ownerEmail: "",
@@ -102,10 +104,21 @@ export const AddBrandModal: React.FC<AddBrandModalProps> = ({
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Add brand to context
+      addBrand({
+        brandName: formData.brandName,
+        ownerEmail: formData.ownerEmail,
+        password: formData.password,
+        phone: formData.phone,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        country: formData.country,
+        pincode: formData.pincode,
+        pickupLocation: formData.pickupLocation,
+        status: 'Active'
+      });
       
-      console.log("Brand data:", formData);
       alert("Brand account created successfully!");
       onClose();
       

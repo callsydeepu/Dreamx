@@ -6,122 +6,18 @@ import { Badge } from "../../components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { AddBrandModal } from "../../components/AddBrandModal";
 import { useCart } from "../../contexts/CartContext";
+import { useBrand } from "../../contexts/BrandContext";
 
 export const AdminPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { getAllOrders } = useCart();
+  const { brands, deleteBrand, updateBrand } = useBrand();
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [showAddBrand, setShowAddBrand] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Mock data for brands
-  const brands = [
-    {
-      id: 1,
-      brandName: "ROCKAGE",
-      ownerEmail: "rockage112@gmail.com",
-      phone: "+91 98765 43210",
-      address: "123 Fashion Street, Mumbai",
-      city: "Mumbai",
-      state: "Maharashtra",
-      country: "India",
-      pincode: "400001",
-      pickupLocation: "Mumbai Central",
-      createdAt: "2025-07-01",
-      status: "Active",
-      totalProducts: 5,
-      totalOrders: 23,
-      revenue: 45600
-    },
-    {
-      id: 2,
-      brandName: "StyleCraft",
-      ownerEmail: "style@craft.com",
-      phone: "+91 87654 32109",
-      address: "456 Design Avenue, Delhi",
-      city: "Delhi",
-      state: "Delhi",
-      country: "India",
-      pincode: "110001",
-      pickupLocation: "Connaught Place",
-      createdAt: "2025-06-27",
-      status: "Active",
-      totalProducts: 8,
-      totalOrders: 15,
-      revenue: 32400
-    },
-    {
-      id: 3,
-      brandName: "UrbanWear",
-      ownerEmail: "urban@wear.com",
-      phone: "+91 76543 21098",
-      address: "789 Trend Road, Bangalore",
-      city: "Bangalore",
-      state: "Karnataka",
-      country: "India",
-      pincode: "560001",
-      pickupLocation: "MG Road",
-      createdAt: "2025-06-28",
-      status: "Pending",
-      totalProducts: 3,
-      totalOrders: 7,
-      revenue: 18900
-    }
-  ];
-
-  // Mock data for orders
-  const orders = [
-    {
-      id: "ORD001",
-      customerName: "John Doe",
-      customerEmail: "john@example.com",
-      brandName: "ROCKAGE",
-      productName: "Oversized T-shirt",
-      quantity: 2,
-      totalAmount: 1398,
-      status: "Delivered",
-      orderDate: "2025-01-15",
-      shippingAddress: "123 Customer Street, Mumbai, 400002"
-    },
-    {
-      id: "ORD002",
-      customerName: "Jane Smith",
-      customerEmail: "jane@example.com",
-      brandName: "StyleCraft",
-      productName: "Designer Hoodie",
-      quantity: 1,
-      totalAmount: 2499,
-      status: "Shipped",
-      orderDate: "2025-01-20",
-      shippingAddress: "456 Buyer Avenue, Delhi, 110003"
-    },
-    {
-      id: "ORD003",
-      customerName: "Mike Johnson",
-      customerEmail: "mike@example.com",
-      brandName: "ROCKAGE",
-      productName: "Anime T-shirt",
-      quantity: 3,
-      totalAmount: 2097,
-      status: "Processing",
-      orderDate: "2025-01-22",
-      shippingAddress: "789 Client Road, Pune, 411001"
-    },
-    {
-      id: "ORD004",
-      customerName: "Sarah Wilson",
-      customerEmail: "sarah@example.com",
-      brandName: "UrbanWear",
-      productName: "Casual Shirt",
-      quantity: 1,
-      totalAmount: 1599,
-      status: "Pending",
-      orderDate: "2025-01-23",
-      shippingAddress: "321 User Lane, Bangalore, 560002"
-    },
-    // Add orders from cart context
-    ...getAllOrders()
-  ];
+  // Get real-time orders
+  const orders = getAllOrders();
 
   const tabs = ["Dashboard", "Brand Accounts", "Orders", "Analytics"];
 
@@ -129,14 +25,14 @@ export const AdminPage = (): JSX.Element => {
     switch (status.toLowerCase()) {
       case "active":
       case "delivered":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 hover:bg-green-100";
       case "pending":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-yellow-100 text-yellow-700 hover:bg-yellow-100";
       case "shipped":
       case "processing":
-        return "bg-blue-100 text-blue-700";
+        return "bg-blue-100 text-blue-700 hover:bg-blue-100";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-gray-100 text-gray-700 hover:bg-gray-100";
     }
   };
 
@@ -150,6 +46,17 @@ export const AdminPage = (): JSX.Element => {
     order.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     order.brandName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleDeleteBrand = (brandId: string) => {
+    if (window.confirm('Are you sure you want to delete this brand? This action cannot be undone.')) {
+      deleteBrand(brandId);
+    }
+  };
+
+  const handleToggleBrandStatus = (brandId: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+    updateBrand(brandId, { status: newStatus as any });
+  };
 
   const getTabContent = () => {
     switch (activeTab) {
@@ -207,7 +114,7 @@ export const AdminPage = (): JSX.Element => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                      <p className="text-3xl font-bold text-gray-900">₹96.9K</p>
+                      <p className="text-3xl font-bold text-gray-900">₹{brands.reduce((total, brand) => total + brand.revenue, 0).toLocaleString()}</p>
                     </div>
                     <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
                       <TrendingUp className="w-6 h-6 text-yellow-600" />
@@ -331,13 +238,28 @@ export const AdminPage = (): JSX.Element => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{brand.createdAt}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div className="flex items-center gap-2">
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-8 w-8"
+                                onClick={() => navigate(`/brand/${brand.brandName.toLowerCase()}`)}
+                              >
                                 <Eye className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-8 w-8"
+                                onClick={() => handleToggleBrandStatus(brand.id, brand.status)}
+                              >
                                 <Edit className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600">
+                              <Button 
+                                variant="ghost" 
+                                size="icon" 
+                                className="h-8 w-8 text-red-600"
+                                onClick={() => handleDeleteBrand(brand.id)}
+                              >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </div>
@@ -463,22 +385,19 @@ export const AdminPage = (): JSX.Element => {
                 <CardContent className="p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Order Status Distribution</h3>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Delivered</span>
-                      <span className="text-sm font-medium text-green-600">1</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Shipped</span>
-                      <span className="text-sm font-medium text-blue-600">1</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Processing</span>
-                      <span className="text-sm font-medium text-yellow-600">1</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Pending</span>
-                      <span className="text-sm font-medium text-gray-600">1</span>
-                    </div>
+                    {['Delivered', 'Shipped', 'Processing', 'Pending'].map(status => {
+                      const count = orders.filter(order => order.status === status).length;
+                      return (
+                        <div key={status} className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">{status}</span>
+                          <span className={`text-sm font-medium ${getStatusColor(status).includes('green') ? 'text-green-600' : 
+                            getStatusColor(status).includes('blue') ? 'text-blue-600' : 
+                            getStatusColor(status).includes('yellow') ? 'text-yellow-600' : 'text-gray-600'}`}>
+                            {count}
+                          </span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>

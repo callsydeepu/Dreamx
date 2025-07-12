@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useBrand } from './BrandContext';
 
 export interface User {
   id: string;
@@ -31,19 +32,21 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const { getBrandByEmail } = useBrand();
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // Demo brand account
-    if (email === 'rockage112@gmail.com' && password === 'Abhishek@123') {
+    // Check if it's a brand account created by admin
+    const brand = getBrandByEmail(email);
+    if (brand && brand.password === password) {
       const brandUser: User = {
-        id: 'brand-1',
-        email: 'rockage112@gmail.com',
-        username: 'ROCKAGE',
+        id: brand.id,
+        email: brand.ownerEmail,
+        username: brand.brandName,
         isBrand: true,
-        brandName: 'ROCKAGE',
-        brandDescription: 'Rockage: Where fashion meets fearless attitude! Celebrate individuality with our premium 100% cotton, 250gsm oversized anime tees. Bold designs like "HONOR BOUND" and "GENJUTSU" in sizes S-XXL. Wear your attitude. Rock your age!',
-        brandLogo: 'https://i.postimg.cc/xTVNmCps/Dream-X-Store.png',
-        joinedDate: '2024-01-15'
+        brandName: brand.brandName,
+        brandDescription: brand.brandDescription || '',
+        brandLogo: brand.brandLogo || 'https://i.postimg.cc/xTVNmCps/Dream-X-Store.png',
+        joinedDate: brand.createdAt
       };
       setUser(brandUser);
       return true;

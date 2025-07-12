@@ -6,6 +6,7 @@ import { Badge } from "../../components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../contexts/CartContext";
 import { useAuth } from "../../contexts/AuthContext";
+import { useBrand } from "../../contexts/BrandContext";
 
 export const DashboardPage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,6 +18,7 @@ export const DashboardPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { getTotalItems } = useCart();
   const { user, isBrand } = useAuth();
+  const { getAllPublicProducts } = useBrand();
 
   // Sliding Ads Data
   const adsData = [
@@ -59,25 +61,23 @@ export const DashboardPage = (): JSX.Element => {
     return () => clearInterval(interval);
   }, [adsData.length]);
 
-  // Single demo product - Brand will add their own products
-  const demoProducts = [
-    {
-      id: 1,
-      name: "Oversized t shirt",
-      brand: "ROCKAGE", 
-      brandSlug: "rockage",
-      originalPrice: 1399,
-      salePrice: 699,
-      discount: 50,
-      image: "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
-      category: "T-Shirts",
-      isNew: true,
-      slug: "oversized-t-shirt",
-      isOnSale: true,
-      rating: 4.5,
-      reviews: 128
-    }
-  ];
+  // Get all public products from brands
+  const allProducts = getAllPublicProducts().map(product => ({
+    id: product.id,
+    name: product.name,
+    brand: product.brandName,
+    brandSlug: product.brandName.toLowerCase(),
+    originalPrice: product.price,
+    salePrice: product.discountedPrice || product.price,
+    discount: product.discountedPrice ? Math.round(((product.price - product.discountedPrice) / product.price) * 100) : 0,
+    image: product.images[0] || "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
+    category: product.category,
+    isNew: true,
+    slug: product.slug,
+    isOnSale: !!product.discountedPrice,
+    rating: product.rating || 4.5,
+    reviews: product.reviews || 128
+  }));
 
   const categories = ["All", "Shirts", "T-Shirts", "Hoodies", "Jackets", "Jeans"];
 
@@ -88,7 +88,7 @@ export const DashboardPage = (): JSX.Element => {
     setIsSearching(true);
     
     setTimeout(() => {
-      const results = demoProducts.filter(product => 
+      const results = allProducts.filter(product => 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.brand.toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -98,7 +98,7 @@ export const DashboardPage = (): JSX.Element => {
     }, 500);
   };
 
-  const handleProductClick = (product: typeof demoProducts[0]) => {
+  const handleProductClick = (product: typeof allProducts[0]) => {
     navigate(`/product/${product.slug}`);
   };
 
@@ -402,85 +402,93 @@ export const DashboardPage = (): JSX.Element => {
           {/* Single Product Display - Brand will add more products */}
           {!searchQuery && (
             <div className="mb-8">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Featured Product</h3>
-              </div>
+              {allProducts.length > 0 && (
+                <>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Featured Products</h3>
+                  </div>
 
-              <div className="grid grid-cols-1 gap-4 max-w-sm mx-auto">
-                {demoProducts.map((product) => (
-                  <Card 
-                    key={product.id}
-                    className="border border-gray-200 rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow"
-                    onClick={() => handleProductClick(product)}
-                  >
-                    <CardContent className="p-0">
-                      <div className="relative">
-                        <div className="aspect-square bg-gray-100 overflow-hidden">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        
-                        {/* Rating */}
-                        <div className="absolute top-2 left-2 flex items-center gap-1 bg-white/90 rounded px-2 py-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-3 h-3 ${
-                                i < Math.floor(product.rating || 0)
-                                  ? 'fill-yellow-400 text-yellow-400'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
-                          <span className="text-xs text-gray-600 ml-1">({product.reviews || 0})</span>
-                        </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {allProducts.map((product) => (
+                      <Card 
+                        key={product.id}
+                        className="border border-gray-200 rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+                        onClick={() => handleProductClick(product)}
+                      >
+                        <CardContent className="p-0">
+                          <div className="relative">
+                            <div className="aspect-square bg-gray-100 overflow-hidden">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            
+                            {/* Rating */}
+                            <div className="absolute top-2 left-2 flex items-center gap-1 bg-white/90 rounded px-2 py-1">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-3 h-3 ${
+                                    i < Math.floor(product.rating || 0)
+                                      ? 'fill-yellow-400 text-yellow-400'
+                                      : 'text-gray-300'
+                                  }`}
+                                />
+                              ))}
+                              <span className="text-xs text-gray-600 ml-1">({product.reviews || 0})</span>
+                            </div>
 
-                        {/* Heart Icon */}
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="absolute top-2 right-2 h-8 w-8 bg-white/80 hover:bg-white rounded-full"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                        >
-                          <Heart className="h-4 w-4 text-gray-600" />
-                        </Button>
+                            {/* Heart Icon */}
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="absolute top-2 right-2 h-8 w-8 bg-white/80 hover:bg-white rounded-full"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
+                              <Heart className="h-4 w-4 text-gray-600" />
+                            </Button>
 
-                        {/* Product Info */}
-                        <div className="p-4">
-                          <h4 className="text-base font-medium text-gray-900 mb-1 line-clamp-2">
-                            {product.name}
-                          </h4>
-                          <button 
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleBrandClick(product.brandSlug);
-                            }}
-                            className="text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 text-left"
-                          >
-                            by {product.brand}
-                          </button>
-                          
-                          <div className="flex items-center gap-2 mb-3">
-                            <span className="text-lg font-bold text-gray-900">₹{product.salePrice}</span>
-                            <span className="text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
-                            <span className="text-sm text-green-600 font-medium">{product.discount}% off</span>
+                            {/* Product Info */}
+                            <div className="p-3 sm:p-4">
+                              <h4 className="text-sm sm:text-base font-medium text-gray-900 mb-1 line-clamp-2">
+                                {product.name}
+                              </h4>
+                              <button 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleBrandClick(product.brandSlug);
+                                }}
+                                className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 text-left"
+                              >
+                                by {product.brand}
+                              </button>
+                              
+                              <div className="flex items-center gap-1 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
+                                <span className="text-sm sm:text-lg font-bold text-gray-900">₹{product.salePrice}</span>
+                                {product.discount > 0 && (
+                                  <>
+                                    <span className="text-xs sm:text-sm text-gray-500 line-through">₹{product.originalPrice}</span>
+                                    <span className="text-xs sm:text-sm text-green-600 font-medium">{product.discount}% off</span>
+                                  </>
+                                )}
+                              </div>
+
+                              {/* Sale Price Button */}
+                              <div className="bg-black text-white text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full text-center">
+                                Sale price: ₹{product.salePrice}
+                              </div>
+                            </div>
                           </div>
-
-                          {/* Sale Price Button */}
-                          <div className="bg-black text-white text-sm px-4 py-2 rounded-full text-center">
-                            Sale price: ₹{product.salePrice}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
 

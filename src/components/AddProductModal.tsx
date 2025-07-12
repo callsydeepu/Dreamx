@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { X, Upload, Image as ImageIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import { useBrand } from "../contexts/BrandContext";
+import { useAuth } from "../contexts/AuthContext";
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -14,6 +16,8 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
   onClose,
   brandName
 }) => {
+  const { addProduct, getBrandByEmail } = useBrand();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -91,10 +95,46 @@ export const AddProductModal: React.FC<AddProductModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Product data:", formData);
-    // Handle product upload
+    
+    if (!user) return;
+    
+    const brand = getBrandByEmail(user.email);
+    if (!brand) return;
+    
+    // Add product to brand context
+    addProduct({
+      name: formData.title,
+      description: formData.description,
+      price: parseInt(formData.price),
+      discountedPrice: formData.discountedPrice ? parseInt(formData.discountedPrice) : undefined,
+      category: formData.category,
+      sizes: Object.entries(formData.sizes).filter(([_, checked]) => checked).map(([size, _]) => size),
+      images: formData.images.map(file => URL.createObjectURL(file)),
+      brandId: brand.id,
+      brandName: brand.brandName,
+      isPublic: formData.makePublic
+    });
+    
     alert("Product uploaded successfully!");
     onClose();
+    
+    // Reset form
+    setFormData({
+      title: "",
+      description: "",
+      price: "",
+      discountedPrice: "",
+      category: "T-Shirts",
+      sizes: {
+        S: false,
+        M: false,
+        L: false,
+        XL: false,
+        XXL: false
+      },
+      images: [] as File[],
+      makePublic: true
+    });
   };
 
   return (
