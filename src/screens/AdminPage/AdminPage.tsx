@@ -5,9 +5,11 @@ import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { AddBrandModal } from "../../components/AddBrandModal";
+import { useCart } from "../../contexts/CartContext";
 
 export const AdminPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const { getAllOrders } = useCart();
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [showAddBrand, setShowAddBrand] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
