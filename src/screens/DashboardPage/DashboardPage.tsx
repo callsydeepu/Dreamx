@@ -304,6 +304,21 @@ export const DashboardPage = (): JSX.Element => {
               {searchResults.length > 0 ? (
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {searchResults.map((product) => (
+                    <Card 
+                      key={product.id}
+                      className="border border-gray-200 rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+                      onClick={() => handleProductClick(product)}
+                    >
+                      <CardContent className="p-0">
+                        <div className="relative">
+                          <div className="aspect-square bg-gray-100 overflow-hidden">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          
                           {/* Heart Icon */}
                           <Button
                             variant="ghost"
