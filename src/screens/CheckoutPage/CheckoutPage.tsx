@@ -68,7 +68,7 @@ export const CheckoutPage = (): JSX.Element => {
         return shippingData.firstName && shippingData.lastName && shippingData.address && 
                shippingData.city && shippingData.state && shippingData.postalCode && shippingData.phone;
       case 2:
-        return paymentData.method === 'cod' || 
+        return paymentData.method === 'upi' || 
                (paymentData.cardNumber && paymentData.expiryDate && paymentData.cvv && paymentData.cardName);
       default:
         return true;
@@ -293,21 +293,6 @@ export const CheckoutPage = (): JSX.Element => {
                   UPI Payment
                 </label>
               </div>
-              
-              <div className="flex items-center space-x-4">
-                <input
-                  type="radio"
-                  id="cod"
-                  name="paymentMethod"
-                  value="cod"
-                  checked={paymentData.method === 'cod'}
-                  onChange={(e) => handleInputChange('payment', 'method', e.target.value)}
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
-                />
-                <label htmlFor="cod" className="text-sm font-medium text-gray-700">
-                  Cash on Delivery
-                </label>
-              </div>
             </div>
 
             {/* Card Details */}
@@ -382,14 +367,6 @@ export const CheckoutPage = (): JSX.Element => {
               </div>
             )}
 
-            {/* COD Details */}
-            {paymentData.method === 'cod' && (
-              <div className="p-4 border border-gray-200 rounded-[1px] bg-gray-50">
-                <p className="text-sm text-gray-600">
-                  Pay with cash when your order is delivered. Additional charges may apply.
-                </p>
-              </div>
-            )}
           </div>
         );
 
@@ -430,7 +407,6 @@ export const CheckoutPage = (): JSX.Element => {
                     <p>Credit/Debit Card ending in {paymentData.cardNumber.slice(-4)}</p>
                   )}
                   {paymentData.method === 'upi' && <p>UPI Payment</p>}
-                  {paymentData.method === 'cod' && <p>Cash on Delivery</p>}
                 </div>
               </CardContent>
             </Card>
@@ -559,7 +535,7 @@ export const CheckoutPage = (): JSX.Element => {
                       disabled={!validateStep(currentStep)}
                       className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-[1px]"
                     >
-                      Continue
+                      {currentStep === 2 ? 'Pay Now' : 'Continue'}
                     </Button>
                   ) : (
                     <Button
@@ -573,7 +549,7 @@ export const CheckoutPage = (): JSX.Element => {
                           Processing...
                         </div>
                       ) : (
-                        'Place Order'
+                        'Pay Now'
                       )}
                     </Button>
                   )}
@@ -644,7 +620,7 @@ export const CheckoutPage = (): JSX.Element => {
                     disabled={!validateStep(currentStep)}
                     className="w-full mt-6 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-[1px] lg:hidden"
                   >
-                    SAVE & CONTINUE
+                    {currentStep === 2 ? 'PAY NOW' : 'SAVE & CONTINUE'}
                   </Button>
                 )}
               </CardContent>

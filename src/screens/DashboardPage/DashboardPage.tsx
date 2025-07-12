@@ -71,8 +71,6 @@ export const DashboardPage = (): JSX.Element => {
       image: "https://i.postimg.cc/fRWRqwYP/GPT-model.png",
       category: "T-Shirts",
       isNew: true,
-      rating: 4.5,
-      reviews: 128,
       slug: "oversized-t-shirt",
       isOnSale: true
     }
@@ -114,13 +112,6 @@ export const DashboardPage = (): JSX.Element => {
   };
 
   const totalCartItems = getTotalItems();
-
-  // Countdown timer state (for demo)
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 9,
-    minutes: 21,
-    seconds: 8
-  });
 
   const nextAdSlide = () => {
     setCurrentAdSlide((prev) => (prev + 1) % adsData.length);
@@ -303,28 +294,6 @@ export const DashboardPage = (): JSX.Element => {
 
         {/* Content with padding */}
         <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-6">
-          {/* Countdown Timer */}
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Don't Make It Last-Minute!</h3>
-            <div className="flex justify-center items-center gap-4 mb-4">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900">{timeLeft.hours.toString().padStart(2, '0')}</div>
-                <div className="text-sm text-gray-600">HOURS</div>
-              </div>
-              <div className="text-3xl font-bold text-gray-900">:</div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900">{timeLeft.minutes.toString().padStart(2, '0')}</div>
-                <div className="text-sm text-gray-600">MINUTES</div>
-              </div>
-              <div className="text-3xl font-bold text-gray-900">:</div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-gray-900">{timeLeft.seconds.toString().padStart(2, '0')}</div>
-                <div className="text-sm text-gray-600">SECONDS</div>
-              </div>
-            </div>
-            <h4 className="text-xl font-semibold text-gray-800">It's Pouring Savings</h4>
-          </div>
-
           {/* Search Results */}
           {searchQuery && (
             <div className="mb-8">
@@ -335,36 +304,6 @@ export const DashboardPage = (): JSX.Element => {
               {searchResults.length > 0 ? (
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   {searchResults.map((product) => (
-                    <Card 
-                      key={product.id}
-                      className="border border-gray-200 rounded-lg overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow"
-                      onClick={() => handleProductClick(product)}
-                    >
-                      <CardContent className="p-0">
-                        <div className="relative">
-                          <div className="aspect-square bg-gray-100 overflow-hidden">
-                            <img
-                              src={product.image}
-                              alt={product.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          
-                          {/* Rating */}
-                          <div className="absolute top-2 left-2 flex items-center gap-1">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-3 h-3 ${
-                                  i < Math.floor(product.rating)
-                                    ? 'fill-yellow-400 text-yellow-400'
-                                    : 'text-gray-300'
-                                }`}
-                              />
-                            ))}
-                            <span className="text-xs text-gray-600 ml-1">({product.reviews})</span>
-                          </div>
-
                           {/* Heart Icon */}
                           <Button
                             variant="ghost"
