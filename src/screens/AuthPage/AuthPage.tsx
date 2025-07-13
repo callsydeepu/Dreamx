@@ -4,7 +4,6 @@ import { Card, CardContent } from "../../components/ui/card";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useBrand } from "../../contexts/BrandContext";
 
 export const AuthPage = (): JSX.Element => {
   const [formData, setFormData] = useState({
@@ -21,7 +20,6 @@ export const AuthPage = (): JSX.Element => {
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const navigate = useNavigate();
   const { login } = useAuth();
-  const { registerBrand } = useBrand();</parameter>
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -81,26 +79,10 @@ export const AuthPage = (): JSX.Element => {
     setIsLoading(true);
     
     try {
-      // If it's signup and user selected "I am a brand"
-      if (authMode === 'signup' && formData.isBrand) {
-        // Register as brand
-        registerBrand({
-          brandName: formData.username,
-          email: formData.email,
-          password: formData.password
-        });
-      }
-      
       const success = await login(formData.email, formData.password);
       if (success) {
-        // Navigate based on user type
-        if (formData.isBrand || authMode === 'signin') {
-          // Check if logged in user is a brand
-          const isLoggedInBrand = await login(formData.email, formData.password);
-          navigate('/dashboard');
-        } else {
-          navigate('/dashboard');
-        }
+        // Both users and brands go to dashboard after login
+        navigate('/dashboard');
       } else {
         setErrors({ email: 'Invalid credentials' });
       }

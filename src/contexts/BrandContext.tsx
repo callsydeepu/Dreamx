@@ -19,7 +19,6 @@ export interface Brand {
   revenue: number;
   brandDescription?: string;
   brandLogo?: string;
-  isSelfRegistered?: boolean;
 }
 
 export interface Product {
@@ -44,7 +43,6 @@ interface BrandContextType {
   brands: Brand[];
   products: Product[];
   addBrand: (brand: Omit<Brand, 'id' | 'createdAt' | 'totalProducts' | 'totalOrders' | 'revenue'>) => void;
-  registerBrand: (brandData: { brandName: string; email: string; password: string }) => void;
   updateBrand: (id: string, updates: Partial<Brand>) => void;
   deleteBrand: (id: string) => void;
   getBrandByEmail: (email: string) => Brand | undefined;
@@ -157,29 +155,6 @@ export const BrandProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setBrands(prev => [...prev, newBrand]);
   };
 
-  const registerBrand = (brandData: { brandName: string; email: string; password: string }) => {
-    const newBrand: Brand = {
-      id: `brand-${Date.now()}`,
-      brandName: brandData.brandName,
-      ownerEmail: brandData.email,
-      password: brandData.password,
-      phone: '',
-      address: '',
-      city: '',
-      state: '',
-      country: 'India',
-      pincode: '',
-      pickupLocation: '',
-      createdAt: new Date().toISOString().split('T')[0],
-      status: 'Active',
-      totalProducts: 0,
-      totalOrders: 0,
-      revenue: 0,
-      isSelfRegistered: true
-    };
-    setBrands(prev => [...prev, newBrand]);
-  };
-
   const updateBrand = (id: string, updates: Partial<Brand>) => {
     setBrands(prev => prev.map(brand => 
       brand.id === id ? { ...brand, ...updates } : brand
@@ -247,7 +222,6 @@ export const BrandProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         brands,
         products,
         addBrand,
-        registerBrand,
         updateBrand,
         deleteBrand,
         getBrandByEmail,

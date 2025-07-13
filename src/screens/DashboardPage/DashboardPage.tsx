@@ -426,6 +426,19 @@ export const DashboardPage = (): JSX.Element => {
                             </div>
                             
                             {/* Rating */}
+                            <div className="absolute top-2 left-2 flex items-center gap-1 bg-white/90 rounded px-2 py-1">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-3 h-3 ${
+                                    i < Math.floor(product.rating || 0)
+                                      ? 'fill-yellow-400 text-yellow-400'
+                                      : 'text-gray-300'
+                                  }`}
+                                />
+                              ))}
+                              <span className="text-xs text-gray-600 ml-1">({product.reviews || 0})</span>
+                            </div>
 
                             {/* Heart Icon */}
                             <Button

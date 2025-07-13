@@ -52,23 +52,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       return true;
     }
     
-    // Check if it's a self-registered brand account
-    const selfRegisteredBrand = brands.find(b => b.ownerEmail === email && b.isSelfRegistered);
-    if (selfRegisteredBrand && selfRegisteredBrand.password === password) {
-      const brandUser: User = {
-        id: selfRegisteredBrand.id,
-        email: selfRegisteredBrand.ownerEmail,
-        username: selfRegisteredBrand.brandName,
-        isBrand: true,
-        brandName: selfRegisteredBrand.brandName,
-        brandDescription: selfRegisteredBrand.brandDescription || '',
-        brandLogo: selfRegisteredBrand.brandLogo || 'https://i.postimg.cc/xTVNmCps/Dream-X-Store.png',
-        joinedDate: selfRegisteredBrand.createdAt
-      };
-      setUser(brandUser);
-      return true;
-    }
-    
     // Regular user login - Extract username from email
     const username = email.includes('@') ? email.split('@')[0] : email;
     const regularUser: User = {
