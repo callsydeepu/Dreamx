@@ -74,8 +74,7 @@ export const DashboardPage = (): JSX.Element => {
     category: product.category,
     isNew: true,
     slug: product.slug,
-    isOnSale: !!product.discountedPrice,
-    rating: product.rating || 4.5,
+    isOnSale: !!product.discountedPrice,  // rating: product.rating || 4.5,
     reviews: product.reviews || 128
   }));
 
@@ -354,6 +353,7 @@ export const DashboardPage = (): JSX.Element => {
                             {/* Sale Price Button */}
                             <div className="bg-black text-white text-xs px-3 py-1 rounded-full text-center">
                               Sale price: ₹{product.salePrice}
+                              
                             </div>
                           </div>
                         </div>
@@ -425,7 +425,7 @@ export const DashboardPage = (): JSX.Element => {
                               />
                             </div>
                             
-                            {/* Rating */}
+                            {/* Rating
                             <div className="absolute top-2 left-2 flex items-center gap-1 bg-white/90 rounded px-2 py-1">
                               {[...Array(5)].map((_, i) => (
                                 <Star
@@ -439,6 +439,7 @@ export const DashboardPage = (): JSX.Element => {
                               ))}
                               <span className="text-xs text-gray-600 ml-1">({product.reviews || 0})</span>
                             </div>
+                             */}
 
                             {/* Heart Icon */}
                             <Button
