@@ -6,8 +6,14 @@ import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Heart, Users, Shield, Truck, RotateCcw, Star, Target, Globe, Award } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const AboutPage = (): JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleStartShopping = () => {
+    navigate('/dashboard');
+  };
   const values = [
     {
       icon: Heart,
@@ -338,10 +344,16 @@ export const AboutPage = (): JSX.Element => {
                   Become part of the DreamX World family and discover products that inspire, delight, and make a difference in your everyday life.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button className="bg-[#f1ff8c] hover:bg-[#e9f87a] text-black font-semibold px-8 py-4 rounded-full text-lg border border-black transition-all duration-300 hover:scale-105">
+                  <Button 
+                    onClick={handleStartShopping}
+                    className="bg-[#f1ff8c] hover:bg-[#e9f87a] text-black font-semibold px-8 py-4 rounded-full text-lg border border-black transition-all duration-300 hover:scale-105"
+                  >
                     Start Shopping
                   </Button>
-                  <Button variant="outline" className="border-white text-white hover:bg-white hover:text-purple-600 px-8 py-4 rounded-full text-lg transition-all duration-300">
+                  <Button 
+                    variant="outline" 
+                    className="border-white text-black hover:bg-white hover:text-purple-600 px-8 py-4 rounded-full text-lg transition-all duration-300"
+                  >
                     Learn More
                   </Button>
                 </div>
