@@ -14,6 +14,7 @@ import { CheckoutPage } from "./screens/CheckoutPage";
 import { OrderSuccessPage } from "./screens/OrderSuccessPage";
 import { AdminPage } from "./screens/AdminPage";
 import { BrandPage } from "./screens/BrandPage";
+import { AboutPage } from "./screens/AboutPage";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
               <Route path="/auth" element={<AuthPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/user-profile" element={<UserProfilePage />} />
-              <Route path="/about" element={<LandingPage />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<LandingPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/product/:productSlug" element={<ProductPage />} />
